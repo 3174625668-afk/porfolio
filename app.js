@@ -9,7 +9,7 @@ let exitTimer;
 
 function revealType(button = null) {
   activeProject = button;
-  document.querySelectorAll('.project').forEach(project => {
+  document.querySelectorAll('.type-target').forEach(project => {
     const selected = project === button;
     project.toggleAttribute('data-type-active', selected);
     project.querySelector('small').setAttribute('aria-hidden', String(!selected));
@@ -22,7 +22,10 @@ function activate(section) {
   clearTimeout(exitTimer);
   if (active !== section) revealType();
   active = section;
-  if (section) canvas.dataset.active = section;
+  if (section) {
+    canvas.dataset.active = section;
+    canvas.classList.add('has-explored');
+  }
   else delete canvas.dataset.active;
   document.querySelectorAll('[data-section]').forEach(button => {
     button.setAttribute('aria-expanded', String(button.dataset.section === section));
@@ -35,15 +38,10 @@ for (const [key, items] of Object.entries(projects)) {
   const panel = document.getElementById(key + '-list');
   const entries = panel.querySelector('.entries');
   for (const item of items) {
-    if (item.kind === 'group') {
-      const heading = document.createElement('h2');
-      heading.className = 'group-label';
-      heading.textContent = item.displayTitle;
-      entries.append(heading);
-      continue;
-    }
-    const button = document.createElement('button');
-    button.className = 'project';
+    const isGroup = item.kind === 'group';
+    const button = document.createElement(isGroup ? 'h2' : 'button');
+    button.className = isGroup ? 'group-label type-target' : 'project type-target';
+    if (isGroup) button.tabIndex = 0;
     button.dataset.projectId = item.id;
     const title = document.createElement('strong');
     const category = document.createElement('small');
@@ -69,6 +67,10 @@ for (const [key, items] of Object.entries(projects)) {
       if (activeProject === button) revealType();
     });
     button.addEventListener('click', event => {
+      if (isGroup) {
+        revealType(button);
+        return;
+      }
       // On touch, the first tap reveals the type; a second tap opens the existing notice.
       const isTouch = event.detail !== 0 && (pointerType === 'touch' || pointerType === 'pen');
       if (isTouch && activeProject !== button) {
@@ -92,6 +94,14 @@ for (const button of document.querySelectorAll('[data-section]')) {
     clearTimeout(exitTimer);
     if (event.pointerType === 'mouse') activate(button.dataset.section);
   });
+  button.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'touch' || event.pointerType === 'pen') {
+      button.classList.remove('tap-feedback');
+      void button.offsetWidth;
+      button.classList.add('tap-feedback');
+    }
+  });
+  button.addEventListener('animationend', () => button.classList.remove('tap-feedback'));
   button.addEventListener('click', event => {
     // A mouse click after hover keeps the already open list available.
     if (event.pointerType === 'mouse') activate(button.dataset.section);
