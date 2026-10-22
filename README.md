@@ -6,7 +6,7 @@
 
 [Art Practice](previews/home-art.png) · [Research & Curation](previews/home-research.png) · [Mobile](previews/home-mobile.png)
 
-[Download the interactive homepage](https://github.com/3174625668-afk/porfolio/raw/refs/heads/main/previews/home-interactive.html) — save the HTML file, then open it in your browser. No installation or server is needed. Hover an illustration to open its list. Scroll inside the desktop list to see all full-size titles. Other Works reveals SELECTED WORKS but does not navigate. First tap a project on touch screens to reveal its category; tap again for availability.
+[Download the interactive homepage](https://github.com/3174625668-afk/porfolio/raw/refs/heads/main/previews/home-interactive.html) — save the HTML file, then open it in your browser. No installation or server is needed. Hover an illustration to open its list. All desktop titles expand down the page in the supplied screenshot composition; there is no internal scroll area. Hover a title for the soft dot-dispersion effect. Other Works reveals SELECTED WORKS but does not navigate. First tap a project on touch screens to reveal its category; tap again for availability.
 
 ### Live interactive preview
 

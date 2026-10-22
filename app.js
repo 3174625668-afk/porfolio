@@ -1,4 +1,5 @@
 import { projects } from './projects.js';
+import { attachTextDust } from './text-dust.js';
 
 const canvas = document.querySelector('.canvas');
 const status = document.querySelector('#status');
@@ -82,6 +83,7 @@ for (const [key, items] of Object.entries(projects)) {
       notice.showModal();
     });
     entries.append(button);
+    attachTextDust(button);
   }
   panel.querySelector('.close').addEventListener('click', () => {
     activate(null);

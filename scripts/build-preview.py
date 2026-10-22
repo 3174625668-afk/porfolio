@@ -16,7 +16,8 @@ for name in ('logo', 'person', 'desk'):
     data = base64.b64encode((root / f'assets/{name}.png').read_bytes()).decode()
     html = html.replace(f'assets/{name}.png', 'data:image/png;base64,' + data)
 js = (root / 'projects.js').read_text().replace('export const projects', 'const projects')
-js += '\n' + (root / 'app.js').read_text().replace("import { projects } from './projects.js';", '')
+js += '\n' + (root / 'text-dust.js').read_text().replace('export function attachTextDust', 'function attachTextDust')
+js += '\n' + (root / 'app.js').read_text().replace("import { projects } from './projects.js';", '').replace("import { attachTextDust } from './text-dust.js';", '')
 start = js.index("await fetch('assets/decorations.json')")
 end = js.index('\nfor (const item of layout.items)', start)
 js = js[:start] + (root / 'assets/decorations.json').read_text() + ';' + js[end:]

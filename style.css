@@ -41,23 +41,20 @@ a { color: inherit; text-decoration: none; }
 .decoration { position: absolute; pointer-events: none; }
 .star { background: #111; clip-path: polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%); }
 .line { background: #222; }
-/* JSON: left x≈20/y≈131, right edge≈1580/y≈138 on a 1600×900 canvas.
-   Full-size titles scroll within the wide upper corners, clear of fixed artwork.
-   Boundaries also reserve room for each illustration's 1.04 hover transform. */
-.projects { position: absolute; top: 12%; height: 33%; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #aaa transparent; z-index: 2; animation: reveal .2s ease; padding-right: .35cqw; }
-.projects.left { left: 1.25%; width: 26.25%; }
-.projects.right { right: 1.25%; width: 29.75%; height: 40%; text-align: right; padding-left: .35cqw; padding-right: 0; }
-.entries { display: flex; flex-direction: column; gap: 1cqw; }
-.type-target { position: relative; display: block; width: 100%; padding-bottom: 2cqw; text-align: inherit; }
-.type-target strong { display: block; font-size: 3.75cqw; font-weight: 900; letter-spacing: -.12cqw; line-height: 1.04; overflow-wrap: normal; text-wrap: pretty; }
+/* Full-height, open title composition follows the supplied homepage screenshot. */
+.projects { position: absolute; top: 14.55%; height: auto; overflow: visible; z-index: 2; animation: reveal .2s ease; }
+.projects.left { left: 1.25%; width: 36.25%; }
+.projects.right { right: 1.25%; top: 15.33%; width: 32.75%; text-align: right; }
+.entries { display: flex; flex-direction: column; gap: .225cqw; }
+.type-target { position: relative; display: block; width: 100%; padding-bottom: 0; text-align: inherit; }
+.type-target strong { display: block; font-size: 3.75cqw; font-weight: 900; letter-spacing: -.025cqw; line-height: 1.04; overflow-wrap: normal; text-wrap: wrap; }
 .right .type-target strong { font-size: 3.5cqw; }
 .group-label { margin: 0; font-size: inherit; cursor: default; }
 .group-label strong { font-weight: 700; }
-.type-target small { position: absolute; left: 0; right: 0; bottom: 0; min-height: 1.65cqw; display: block; font-size: .625cqw; font-weight: 400; line-height: 1.4; letter-spacing: .07cqw; color: #555; opacity: 0; visibility: hidden; transition: opacity .15s ease; }
+.type-target small { position: absolute; left: 0; right: 0; top: 100%; min-height: 0; display: block; font-size: .5cqw; font-weight: 400; line-height: 1.2; letter-spacing: .055cqw; color: #555; opacity: 0; visibility: hidden; transition: opacity .15s ease; }
 .type-target[data-type-active] small { opacity: 1; visibility: visible; }
-.project:hover strong, .project:focus-visible strong { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
-.close { display: block; font-size: .65cqw; letter-spacing: .1cqw; margin-bottom: 1.2cqw; }
-.right .close { text-align: left; }
+.close { position: absolute; top: -1.9cqw; left: 0; display: block; font-size: .65cqw; letter-spacing: .1cqw; margin-bottom: 1.2cqw; }
+.right .close { left: 0; right: auto; text-align: left; }
 .sr-only { position: absolute; top: 0; left: 0; margin: 0; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 dialog { border: 1px solid #111; padding: 48px; max-width: min(560px,90vw); }
 dialog::backdrop { background: #ffffffd9; }
@@ -80,7 +77,7 @@ dialog h2 { font-size: 32px; line-height: 1.1; }
   .illustration span, .desk span { top: calc(100% + 14px); font-size: 9px; letter-spacing: 1px; }
   .explore-hint { top: calc(260px + 55cqw); font-size: 9px; letter-spacing: 1px; }
   .decoration { top: var(--mobile-top) !important; height: var(--mobile-height) !important; }
-  .projects, .projects.right { position: relative; top: auto; left: auto; right: auto; width: auto; height: auto; margin: 0 20px; padding: 24px 0; overflow: visible; }
+  .projects, .projects.left, .projects.right { position: relative; top: auto; left: auto; right: auto; width: auto; height: auto; margin: 0 20px; padding: 24px 0; overflow: visible; }
   .projects:not([hidden]) { display: block; margin-top: calc(260px + 69cqw); }
   .entries { gap: 24px; }
   .type-target strong, .right .type-target strong { font-size: clamp(36px,7vw,56px); letter-spacing: -1px; }
@@ -94,13 +91,32 @@ dialog h2 { font-size: 32px; line-height: 1.1; }
   .illustration img { transform: none !important; filter: none !important; }
 }
 
-/* Keep scrolling explicit rather than squeezing large type into the illustration margins. */
+
 @media (min-width: 901px) {
-  .projects { overflow: visible; }
-  .projects .entries { height: calc(100% - 3.4cqw); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #999 transparent; padding-bottom: 1cqw; mask-image: linear-gradient(#000 calc(100% - 1.5cqw), transparent); }
-  .projects .entries::-webkit-scrollbar { width: 4px; }
-  .projects .entries::-webkit-scrollbar-thumb { background: #999; }
-  .projects .entries > * { flex-shrink: 0; }
-  .list-hint { margin: .7cqw 0 0; font-size: .55cqw; letter-spacing: .1cqw; color: #666; }
+  .left .type-target:nth-child(2) { width: 26.9cqw; }
+  .left .type-target:nth-child(3), .left .group-label { width: 27cqw; }
+  .left .type-target:nth-child(5) { width: 23.75cqw; }
+  .left .type-target:nth-child(6), .left .type-target:nth-child(7) { width: 16cqw; }
+  .right .entries { align-items: flex-end; gap: .65cqw; }
+  .right .type-target:last-child { width: 20.95cqw; }
 }
-@media (max-width: 900px) { .list-hint { display: none; } }
+.title-dust { position: absolute; left: -24px; top: -24px; pointer-events: none; opacity: 0; transition: opacity 180ms ease-out; }
+.type-target.is-dispersing .title-dust { opacity: 1; }
+.type-target.is-dispersing strong { opacity: .2; filter: blur(.8px); }
+.type-target strong { transition: opacity 180ms ease-out, filter 180ms ease-out; }
+@media (max-width: 900px) {
+  .projects .entries { gap: 24px; }
+  .type-target { padding-bottom: 38px; }
+  .type-target small { top: auto; bottom: 0; }
+  .close, .right .close { position: static; margin-bottom: 25px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .title-dust { display: none; }
+  .type-target.is-dispersing strong { opacity: 1; filter: none; }
+}
+/* Empty parts of the open composition must not block either illustration. */
+.projects, .entries { pointer-events: none; }
+.type-target, .close { pointer-events: auto; }
+/* The compact screenshot spacing leaves labels in the inter-line leading. */
+.type-target small { z-index: 3; }
+html { overflow-x: clip; }

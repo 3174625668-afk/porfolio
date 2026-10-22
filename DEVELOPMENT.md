@@ -8,7 +8,7 @@ python -m http.server 3000 --bind 0.0.0.0
 
 `index.html`, `style.css`, and `app.js` implement the homepage only. Desktop composition follows the supplied 1600 × 900 JSON. `assets/logo.png`, `person.png`, and `desk.png` are decoded byte-for-byte from its embedded image sources; supplied root images and JSON remain unchanged. CSS uses proportional image fitting without editing image files. The small decorations JSON copies only decorative items to avoid downloading the full embedded-image layout at runtime.
 
-Hover or click each illustration to reveal its list. Arrow Down on its button opens the list and focuses the first project; Escape, Close, or an outside click closes it. Touch uses tap to expand. Desktop lists use the wide upper corners with independent scrolling, preserving JSON title sizes without covering the fixed artwork. Small screens show lists below the artwork. Project buttons show an explicit pending-details notice; no project-detail content or email has been invented.
+Hover or click each illustration to reveal its list. Arrow Down on its button opens the list and focuses the first project; Escape, Close, or an outside click closes it. Touch uses tap to expand. Desktop titles follow the supplied full-height screenshot composition, with a shared edge alignment and no internal scrolling. Small screens show lists below the artwork. Project buttons show an explicit pending-details notice; no project-detail content or email has been invented.
 
 Before adding detail pages, obtain approval of the homepage. Email remains to be supplied. Original JSON remains the composition reference; update CSS coordinates deliberately if the composition changes.
 
@@ -25,6 +25,13 @@ Run `python scripts/build-preview.py` after homepage edits to refresh `previews/
 
 ## Full-size typography and illustration feedback
 
-At the 1600×900 design size, Art Practice titles are 60px/900, Research & Curation titles 56px/900, and Other Works 60px/700. Font sizes scale with the composition width on other desktop sizes. The original full-size list cannot fit into the former narrow margins beside fixed illustrations. Lists therefore scroll in the wider upper corner spaces, following the JSON's starting positions; SCROLL FOR MORE indicates continuation. Touch layouts retain the existing below-artwork lists.
+At the 1600×900 design size, Art Practice titles are 60px/900, Research & Curation titles 56px/900, and Other Works 60px/700. Font sizes scale with the composition width on other desktop sizes. The former narrow sidebars and upper-corner scroll windows have been removed. The screenshot is now the placement reference: the first left title spans a wide line, the second uses two lines, and later rows narrow beside the illustration. Right titles mirror the right alignment. All titles are shown simultaneously without scroll panels or masks. Touch layouts retain the existing below-artwork lists.
 
 HOVER TO EXPLORE ↗ appears in central white space before the first section activation. Pointer-coarse or hoverless devices see TAP TO EXPLORE. Only the original image element transforms on hover: translateY(-3px), scale(1.04), a soft 10% black drop shadow, 250ms ease-out. Its button, category label, and surrounding composition do not move. Touch gets a transient 1.02 lift. prefers-reduced-motion disables transitions, animation, image transforms, and shadows. Cursor feedback and all navigation remain available.
+
+
+## Screenshot distribution and text dispersion
+
+The latest supplied screenshot overrides the earlier scroll-window compromise. Desktop left rows begin around x=20/y=131 on the 1600×900 canvas, with 60px type and a shared 3.6px row gap; right rows use 56px type and the original far-right anchor. Source titles remain exactly as approved, including Not That Scary Ⅱ. The list backgrounds pass pointer events through to illustrations so empty list space cannot obstruct section activation.
+
+`text-dust.js` samples only a live title's glyphs into a transparent canvas when hovered with a mouse. The canvas follows actual browser line wrapping and alignment. Black particles disperse softly near the pointer while the semantic text stays present; leaving restores crisp type. No image assets are altered or used as the particle source. There is no project-image preview. Reduced-motion disables the particle animation and retains the crisp title. Touch keeps tap-to-reveal categories without continuous particle animation. Reference site access was blocked by the environment network, so the effect implements the user's described blur/dot treatment rather than claiming a verified reproduction of that site's animation.
