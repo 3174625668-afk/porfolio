@@ -42,9 +42,10 @@ export function attachTextDust(target) {
       target.append(layer);
     }
     const scale = Math.min(devicePixelRatio || 1, 2);
-    layer.width = Math.ceil((rect.width + padding * 2) * scale);
+    const layerWidth = Math.min(rect.width + padding * 2, document.documentElement.clientWidth - rect.left + padding);
+    layer.width = Math.ceil(layerWidth * scale);
     layer.height = Math.ceil((rect.height + padding * 2) * scale);
-    layer.style.width = rect.width + padding * 2 + 'px';
+    layer.style.width = layerWidth + 'px';
     layer.style.height = rect.height + padding * 2 + 'px';
     context = layer.getContext('2d');
     context.scale(scale, scale);
