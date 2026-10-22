@@ -6,6 +6,8 @@
 
 [Art Practice](previews/home-art.png) · [Research & Curation](previews/home-research.png) · [Mobile](previews/home-mobile.png)
 
+[Download the interactive homepage](https://github.com/3174625668-afk/porfolio/raw/refs/heads/main/previews/home-interactive.html) — save the HTML file, then open it in your browser. No installation or server is needed. First tap a project on touch screens to reveal its category; tap again for availability.
+
 ### Live interactive preview
 
 In repository **Settings → Pages**, choose **Deploy from a branch**, select **main** and **/ (root)**, then **Save**. Once GitHub finishes deployment, the expected address is:

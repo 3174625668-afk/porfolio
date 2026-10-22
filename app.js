@@ -1,7 +1,145 @@
-const projects={art:[['Nothing, Yet Not Nothing','Printmaking'],['To the Last Ounce','Performance & Video Art'],['Not That Scary','Installation Art'],['我希望他不那么吓人','Undergraduate Graduation Project / Printmaking'],['The Law','Book & Graphic Design'],['Printmaking & Works on Paper','Selected Studies']],research:[['Art Brut and Naïve Art: Challenging the Canon, Expanding Expression','Research Essay'],['Moments in Between','Curatorial Proposal'],['At That Time, This Moment','Exhibition Review'],["The Value of Printmaking in Children’s Aesthetic Education",'Published Article (Chinese)']]};
-const canvas=document.querySelector('.canvas'),status=document.querySelector('#status'),notice=document.querySelector('dialog');let active=null,timer;
-function activate(section){clearTimeout(timer);active=section;section?canvas.dataset.active=section:delete canvas.dataset.active;document.querySelectorAll('[data-section]').forEach(b=>b.setAttribute('aria-expanded',String(b.dataset.section===section)));for(const key of Object.keys(projects))document.getElementById(key+'-list').hidden=key!==section;status.textContent=section?(section==='art'?'Art Practice':'Research & Curation')+' projects open':'';}
-for(const [key,items] of Object.entries(projects)){const panel=document.getElementById(key+'-list');items.forEach(([title,category],index)=>{if(key==='art'&&index===4){const label=document.createElement('p');label.className='group-label';label.textContent='Other Works';panel.querySelector('.entries').append(label);}const b=document.createElement('button');b.className='project';const strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=title;small.textContent=category;b.append(strong,small);b.addEventListener('click',()=>{notice.querySelector('h2').textContent=title;notice.showModal();});panel.querySelector('.entries').append(b);});panel.querySelector('.close').onclick=()=>{activate(null);document.querySelector(`[data-section="${key}"]`).focus();};panel.addEventListener('pointerenter',()=>clearTimeout(timer));panel.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')timer=setTimeout(()=>activate(null),650);});panel.addEventListener('focusin',()=>clearTimeout(timer));}
-document.querySelectorAll('[data-section]').forEach(b=>{b.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'&&matchMedia('(min-width:901px)').matches)activate(b.dataset.section);});b.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&matchMedia('(min-width:901px)').matches)timer=setTimeout(()=>activate(null),650);});b.addEventListener('click',()=>activate(active===b.dataset.section?null:b.dataset.section));b.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();activate(b.dataset.section);document.querySelector('#'+b.dataset.section+'-list .project').focus();}});});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!notice.open)activate(null);});document.addEventListener('click',e=>{if(!e.target.closest('.illustration,.projects,dialog'))activate(null);});notice.querySelectorAll('button').forEach(b=>b.onclick=()=>notice.close());
-const layout=await fetch('assets/decorations.json').then(r=>r.json());for(const item of layout.items.filter(i=>i.type==='star'||i.type==='line')){const el=document.createElement('span');el.className='decoration '+item.type;Object.assign(el.style,{left:item.x/16+'%',top:item.y/9+'%',width:item.w/16+'%',height:item.h/9+'%'});document.querySelector('#decorations').append(el);}
+import { projects } from './projects.js';
+
+const canvas = document.querySelector('.canvas');
+const status = document.querySelector('#status');
+const notice = document.querySelector('dialog');
+let active = null;
+let activeProject = null;
+let exitTimer;
+
+function revealType(button = null) {
+  activeProject = button;
+  document.querySelectorAll('.project').forEach(project => {
+    const selected = project === button;
+    project.toggleAttribute('data-type-active', selected);
+    project.querySelector('small').setAttribute('aria-hidden', String(!selected));
+    if (selected) project.setAttribute('aria-describedby', project.querySelector('small').id);
+    else project.removeAttribute('aria-describedby');
+  });
+}
+
+function activate(section) {
+  clearTimeout(exitTimer);
+  if (active !== section) revealType();
+  active = section;
+  if (section) canvas.dataset.active = section;
+  else delete canvas.dataset.active;
+  document.querySelectorAll('[data-section]').forEach(button => {
+    button.setAttribute('aria-expanded', String(button.dataset.section === section));
+  });
+  for (const key of Object.keys(projects)) document.getElementById(key + '-list').hidden = key !== section;
+  status.textContent = section ? `${section === 'art' ? 'Art Practice' : 'Research & Curation'} projects open` : '';
+}
+
+for (const [key, items] of Object.entries(projects)) {
+  const panel = document.getElementById(key + '-list');
+  const entries = panel.querySelector('.entries');
+  for (const item of items) {
+    if (item.kind === 'group') {
+      const heading = document.createElement('h2');
+      heading.className = 'group-label';
+      heading.textContent = item.displayTitle;
+      entries.append(heading);
+      continue;
+    }
+    const button = document.createElement('button');
+    button.className = 'project';
+    button.dataset.projectId = item.id;
+    const title = document.createElement('strong');
+    const category = document.createElement('small');
+    title.textContent = item.displayTitle;
+    category.textContent = item.category;
+    category.id = item.id + '-type';
+    category.setAttribute('aria-hidden', 'true');
+    button.append(title, category);
+    let pointerType = '';
+    button.addEventListener('pointerdown', event => { pointerType = event.pointerType; });
+    button.addEventListener('pointerenter', event => {
+      clearTimeout(exitTimer);
+      if (event.pointerType === 'mouse') revealType(button);
+    });
+    button.addEventListener('pointerleave', event => {
+      if (event.pointerType === 'mouse' && activeProject === button) revealType();
+    });
+    button.addEventListener('focus', () => {
+      clearTimeout(exitTimer);
+      if (button.matches(':focus-visible')) revealType(button);
+    });
+    button.addEventListener('blur', () => {
+      if (activeProject === button) revealType();
+    });
+    button.addEventListener('click', event => {
+      // On touch, the first tap reveals the type; a second tap opens the existing notice.
+      const isTouch = event.detail !== 0 && (pointerType === 'touch' || pointerType === 'pen');
+      if (isTouch && activeProject !== button) {
+        revealType(button);
+        status.textContent = `${item.displayTitle}: ${item.category}. Tap again for project availability.`;
+        return;
+      }
+      notice.querySelector('h2').textContent = item.displayTitle;
+      notice.showModal();
+    });
+    entries.append(button);
+  }
+  panel.querySelector('.close').addEventListener('click', () => {
+    activate(null);
+    document.querySelector(`[data-section="${key}"]`).focus();
+  });
+}
+
+for (const button of document.querySelectorAll('[data-section]')) {
+  button.addEventListener('pointerenter', event => {
+    clearTimeout(exitTimer);
+    if (event.pointerType === 'mouse') activate(button.dataset.section);
+  });
+  button.addEventListener('click', event => {
+    // A mouse click after hover keeps the already open list available.
+    if (event.pointerType === 'mouse') activate(button.dataset.section);
+    else activate(active === button.dataset.section ? null : button.dataset.section);
+  });
+  button.addEventListener('keydown', event => {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      activate(button.dataset.section);
+      document.querySelector(`#${button.dataset.section}-list .project`).focus();
+    }
+  });
+}
+
+// Keep the list open across the whole gap between the illustration and its titles.
+canvas.addEventListener('pointerenter', () => clearTimeout(exitTimer));
+canvas.addEventListener('pointerleave', event => {
+  if (event.pointerType === 'mouse' && !notice.open && !document.activeElement.closest('.projects')) {
+    exitTimer = setTimeout(() => activate(null), 650);
+  }
+});
+canvas.addEventListener('focusout', event => {
+  if (event.relatedTarget && !canvas.contains(event.relatedTarget) && !notice.contains(event.relatedTarget)) activate(null);
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !notice.open) {
+    const trigger = active && document.querySelector(`[data-section="${active}"]`);
+    activate(null);
+    trigger?.focus({ preventScroll: true });
+  }
+});
+document.addEventListener('click', event => {
+  if (!event.target.closest('.illustration,.projects,dialog')) activate(null);
+});
+notice.querySelectorAll('button').forEach(button => button.addEventListener('click', () => notice.close()));
+
+const layout = await fetch('assets/decorations.json').then(response => {
+  if (!response.ok) throw new Error('Could not load homepage decorations');
+  return response.json();
+});
+for (const item of layout.items) {
+  const decoration = document.createElement('span');
+  decoration.className = 'decoration ' + item.type;
+  Object.assign(decoration.style, {
+    left: item.x / 16 + '%', top: item.y / 9 + '%',
+    width: item.w / 16 + '%', height: item.h / 9 + '%',
+  });
+  decoration.style.setProperty('--mobile-top', item.y / 900 * 760 + 'px');
+  decoration.style.setProperty('--mobile-height', item.h / 900 * 760 + 'px');
+  document.querySelector('#decorations').append(decoration);
+}
