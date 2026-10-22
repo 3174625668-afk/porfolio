@@ -6,8 +6,8 @@ export const projects = {
     { id: 'not-that-scary', displayTitle: 'Not That Scary', fullTitle: 'Not That Scary', category: 'INSTALLATION ART' },
     { kind: 'group', id: 'other-works', displayTitle: 'Other Works', category: 'SELECTED WORKS' },
     { id: 'printmaking', displayTitle: 'Printmaking', fullTitle: 'Printmaking', category: 'PRINTMAKING / WORKS ON PAPER' },
-    { id: 'the-law', displayTitle: 'The Law', fullTitle: 'The Law', category: 'BOOK & GRAPHIC DESIGN' },
-    { id: 'not-that-scary-ii', displayTitle: 'Not That Scary Ⅱ', fullTitle: 'Not That Scary Ⅱ', originalTitle: '我希望他不那么吓人', category: 'PRINTMAKING' },
+    { id: 'the-law', displayTitle: 'The Law', desktopLines: ['The', 'Law'], fullTitle: 'The Law', category: 'BOOK & GRAPHIC DESIGN' },
+    { id: 'not-that-scary-ii', displayTitle: 'Not That Scary Ⅱ', desktopLines: ['Not That', 'Scary', 'Ⅱ'], fullTitle: 'Not That Scary Ⅱ', originalTitle: '我希望他不那么吓人', category: 'PRINTMAKING' },
   ],
   research: [
     { id: 'art-brut-and-naive-art', displayTitle: 'Art Brut and Naïve Art', fullTitle: 'Art Brut and Naïve Art: Challenging the Canon, Expanding Expression', category: 'RESEARCH ESSAY' },

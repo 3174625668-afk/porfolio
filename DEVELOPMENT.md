@@ -1,37 +1,27 @@
-# Homepage preview
+# Homepage development
 
-No build or package installation is needed. From `/workspace/porfolio`, run:
+No package installation or build is required. From `/workspace/porfolio`:
 
 ```sh
 python -m http.server 3000 --bind 0.0.0.0
 ```
 
-`index.html`, `style.css`, and `app.js` implement the homepage only. Desktop composition follows the supplied 1600 × 900 JSON. `assets/logo.png`, `person.png`, and `desk.png` are decoded byte-for-byte from its embedded image sources; supplied root images and JSON remain unchanged. CSS uses proportional image fitting without editing image files. The small decorations JSON copies only decorative items to avoid downloading the full embedded-image layout at runtime.
+The source is `index.html`, `style.css`, `app.js`, `projects.js`, `text-dust.js`, and `assets/`. Run `python scripts/build-preview.py` after edits to refresh the standalone interactive HTML in `previews/`. Original image files and layout JSON are preserved unchanged. The images in assets/ were originally decoded byte-for-byte from that JSON; they are never edited or regenerated.
 
-Hover or click each illustration to reveal its list. Arrow Down on its button opens the list and focuses the first project; Escape, Close, or an outside click closes it. Touch uses tap to expand. Desktop titles follow the supplied full-height screenshot composition, with a shared edge alignment and no internal scrolling. Small screens show lists below the artwork. Project buttons show an explicit pending-details notice; no project-detail content or email has been invented.
+## Composition
 
-Before adding detail pages, obtain approval of the homepage. Email remains to be supplied. Original JSON remains the composition reference; update CSS coordinates deliberately if the composition changes.
+The artwork retains its centered 1600×900 stage. Desktop title columns and both top information labels instead anchor to symmetric browser edges, using a responsive 12–64px safety margin. This uses the outside whitespace on wide browser windows rather than keeping the text crowded inside the illustration stage. Nothing moves when sections activate; the lists have no internal scrolling or fading masks.
 
-## Current homepage interactions
+Left title type remains 60px/900, right 56px/900, and Other Works 60px/700 at the design size. The left row gap is still 3.6px, the right gap 10.4px, and line-height 1.04. Desktop-only line breaks in The Law and Not That Scary Ⅱ lengthen the left composition to the printmaker's feet without increasing spacing or changing project names. `desktopLines` is presentation metadata: the full text content and canonical displayTitle remain unchanged. Mobile spans display inline and wrap naturally. Narrow desktop windows give the final research title extra clearance and slightly tighter tracking to keep it clear of the desk, preserving 56px type.
 
-`projects.js` stores the approved homepage `displayTitle`, future `fullTitle`, and uppercase category. Other Works is a non-navigating, focusable group heading in Art Practice only; hovering, focusing, or tapping it reveals SELECTED WORKS. The graduation project is a separate entry, Not That Scary Ⅱ (U+2161), with its Chinese original title preserved in data. A small licensed font subset ensures that numeral renders on systems missing the glyph; it does not affect other text or artwork.
+## Interaction
 
-Opening a section does not reveal any categories. Hovering a project title or focusing it with the keyboard reveals only that project's type. Space is reserved below every title so labels do not shift other rows. Hovering the label itself stays inside the same project target. Moving through the canvas between illustration and list keeps the list open. Escape, Close, an outside click, or leaving the entire canvas closes it. The two sections are mutually exclusive, and decorations stay visible and fixed while expanded.
+Hover or tap either original illustration to reveal its section; only one section is open. Opening a section does not reveal any type labels. Hover or keyboard focus on a title reveals only its category. Other Works is a non-navigating, focusable group heading in Art Practice; its type is SELECTED WORKS. On touch, the first project tap reveals the category and a second opens the existing availability notice. Other Works never opens a notice or page. Escape, Close, an outside click, or leaving the full page interaction area closes the list. The full-width interaction area includes the outer gutters so moving between artwork and outlying titles remains stable. Empty list areas pass pointer events through to the artwork.
 
-On touch devices, tap an illustration to expand/collapse it. The first tap on a project reveals its category; the second shows the existing availability notice. Tap another project to switch the category. There are no project detail pages or project preview images.
+HOVER TO EXPLORE ↗ changes to TAP TO EXPLORE on touch devices and fades after first activation. Images alone receive a 1.04 scale, -3px lift, and soft 23% black drop shadow over 250ms ease-out; their layout boxes and category labels stay fixed. Touch uses a transient 1.02 scale with a lighter shadow.
 
-Run `python scripts/build-preview.py` after homepage edits to refresh `previews/home-interactive.html`. This is a standalone interactive copy that can be downloaded from GitHub and opened directly in a local browser; it needs no server or external files. The original source remains index.html, style.css, app.js, projects.js, and assets/.
+`text-dust.js` samples the actual live glyph positions into a transparent canvas. The 2px grid gives approximately 2.25× the previous 3px sample density; a tighter dispersion radius keeps the text more cohesive. Nested line spans and natural wrapping are both supported. The semantic title stays present, particles never use illustration data, and leaving restores crisp type. Reduced-motion disables particle animation, image transforms, shadows, and transitions. No project image previews or detail pages are implemented.
 
+## Validation
 
-## Full-size typography and illustration feedback
-
-At the 1600×900 design size, Art Practice titles are 60px/900, Research & Curation titles 56px/900, and Other Works 60px/700. Font sizes scale with the composition width on other desktop sizes. The former narrow sidebars and upper-corner scroll windows have been removed. The screenshot is now the placement reference: the first left title spans a wide line, the second uses two lines, and later rows narrow beside the illustration. Right titles mirror the right alignment. All titles are shown simultaneously without scroll panels or masks. Touch layouts retain the existing below-artwork lists.
-
-HOVER TO EXPLORE ↗ appears in central white space before the first section activation. Pointer-coarse or hoverless devices see TAP TO EXPLORE. Only the original image element transforms on hover: translateY(-3px), scale(1.04), a soft 10% black drop shadow, 250ms ease-out. Its button, category label, and surrounding composition do not move. Touch gets a transient 1.02 lift. prefers-reduced-motion disables transitions, animation, image transforms, and shadows. Cursor feedback and all navigation remain available.
-
-
-## Screenshot distribution and text dispersion
-
-The latest supplied screenshot overrides the earlier scroll-window compromise. Desktop left rows begin around x=20/y=131 on the 1600×900 canvas, with 60px type and a shared 3.6px row gap; right rows use 56px type and the original far-right anchor. Source titles remain exactly as approved, including Not That Scary Ⅱ. The list backgrounds pass pointer events through to illustrations so empty list space cannot obstruct section activation.
-
-`text-dust.js` samples only a live title's glyphs into a transparent canvas when hovered with a mouse. The canvas follows actual browser line wrapping and alignment. Black particles disperse softly near the pointer while the semantic text stays present; leaving restores crisp type. No image assets are altered or used as the particle source. There is no project-image preview. Reduced-motion disables the particle animation and retains the crisp title. Touch keeps tap-to-reveal categories without continuous particle animation. Reference site access was blocked by the environment network, so the effect implements the user's described blur/dot treatment rather than claiming a verified reproduction of that site's animation.
+Verified 1600/1920/2560px desktops and 390/820px touch layouts: symmetric title edges, matching header anchors, unchanged row gaps, foot-level left composition, fixed artwork/decorations, exclusive sections, hover transfer, categories and group heading, nested-line particles, keyboard, touch, reduced motion, and the offline bundle. Pixel-level glyph/artwork collision checks passed at 1600×900 and 1920×900. PNG assets and the original JSON have no changes. Publish updates by pushing main; the existing GitHub Pages branch deployment handles the static website.

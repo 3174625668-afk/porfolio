@@ -2,6 +2,7 @@ import { projects } from './projects.js';
 import { attachTextDust } from './text-dust.js';
 
 const canvas = document.querySelector('.canvas');
+const interactionArea = document.querySelector('main');
 const status = document.querySelector('#status');
 const notice = document.querySelector('dialog');
 let active = null;
@@ -47,6 +48,16 @@ for (const [key, items] of Object.entries(projects)) {
     const title = document.createElement('strong');
     const category = document.createElement('small');
     title.textContent = item.displayTitle;
+    if (item.desktopLines) {
+      title.replaceChildren();
+      item.desktopLines.forEach((line, index) => {
+        if (index) title.append(document.createTextNode(' '));
+        const span = document.createElement('span');
+        span.className = 'title-line';
+        span.textContent = line;
+        title.append(span);
+      });
+    }
     category.textContent = item.category;
     category.id = item.id + '-type';
     category.setAttribute('aria-hidden', 'true');
@@ -119,8 +130,8 @@ for (const button of document.querySelectorAll('[data-section]')) {
 }
 
 // Keep the list open across the whole gap between the illustration and its titles.
-canvas.addEventListener('pointerenter', () => clearTimeout(exitTimer));
-canvas.addEventListener('pointerleave', event => {
+interactionArea.addEventListener('pointerenter', () => clearTimeout(exitTimer));
+interactionArea.addEventListener('pointerleave', event => {
   if (event.pointerType === 'mouse' && !notice.open && !document.activeElement.closest('.projects')) {
     exitTimer = setTimeout(() => activate(null), 650);
   }

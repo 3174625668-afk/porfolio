@@ -16,19 +16,23 @@ export function attachTextDust(target) {
     ink.fillStyle = '#111';
     ink.textBaseline = 'alphabetic';
     const ascent = ink.measureText('M').fontBoundingBoxAscent;
-    const text = title.firstChild;
     const range = document.createRange();
-    // Use the browser's actual character positions, including line wrapping/alignment.
-    for (let i = 0; i < text.length; i++) {
-      range.setStart(text, i);
-      range.setEnd(text, i + 1);
-      const box = range.getBoundingClientRect();
-      ink.fillText(text.textContent[i], box.x - rect.x, box.y - rect.y + ascent);
+    const textNodes = document.createTreeWalker(title, NodeFilter.SHOW_TEXT);
+    // Follow real glyph positions, including deliberate desktop line breaks.
+    while (textNodes.nextNode()) {
+      const text = textNodes.currentNode;
+      for (let i = 0; i < text.length; i++) {
+        if (/\s/.test(text.textContent[i])) continue;
+        range.setStart(text, i);
+        range.setEnd(text, i + 1);
+        const box = range.getBoundingClientRect();
+        ink.fillText(text.textContent[i], box.x - rect.x, box.y - rect.y + ascent);
+      }
     }
     const pixels = ink.getImageData(0, 0, mask.width, mask.height).data;
     points = [];
-    for (let y = 1; y < mask.height; y += 3) {
-      for (let x = 1; x < mask.width; x += 3) {
+    for (let y = 1; y < mask.height; y += 2) {
+      for (let x = 1; x < mask.width; x += 2) {
         if (pixels[(y * mask.width + x) * 4 + 3] > 100) {
           const seed = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
           points.push({ x, y, random: seed - Math.floor(seed) });
@@ -59,19 +63,19 @@ export function attachTextDust(target) {
     context.clearRect(0, 0, width, height);
     context.fillStyle = '#111';
     context.shadowColor = 'rgba(17,17,17,.28)';
-    context.shadowBlur = 1.2;
+    context.shadowBlur = .9;
     for (const point of points) {
       const dx = point.x - cursor.x, dy = point.y - cursor.y;
       const distance = Math.hypot(dx, dy);
       const influence = Math.max(0, 1 - distance / 145);
       const angle = point.random * Math.PI * 2;
-      const spread = eased * (2 + influence * 14) * (0.35 + point.random * .65);
+      const spread = eased * (1 + influence * 8) * (0.35 + point.random * .65);
       const drift = Math.sin(now / 620 + point.random * 6) * .7 * eased;
       const x = point.x + Math.cos(angle) * spread + drift;
       const y = point.y + Math.sin(angle) * spread + drift;
-      context.globalAlpha = .45 + point.random * .5;
+      context.globalAlpha = .65 + point.random * .35;
       context.beginPath();
-      context.arc(x + padding, y + padding, .65 + point.random * .65, 0, Math.PI * 2);
+      context.arc(x + padding, y + padding, .6 + point.random * .5, 0, Math.PI * 2);
       context.fill();
     }
     frame = requestAnimationFrame(draw);
