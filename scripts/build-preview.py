@@ -9,10 +9,14 @@ import base64
 root = Path(__file__).resolve().parent.parent
 html = (root / 'index.html').read_text()
 css = (root / 'style.css').read_text()
+shadow_css = (root / 'assets/outer-shadows.css').read_text()
+cursor = base64.b64encode((root / 'assets/explore-cursor.svg').read_bytes()).decode()
+css = css.replace('assets/explore-cursor.svg', 'data:image/svg+xml;base64,' + cursor)
 font = base64.b64encode((root / 'assets/roman-numeral.ttf').read_bytes()).decode()
 css = css.replace('assets/roman-numeral.ttf', 'data:font/ttf;base64,' + font)
 html = html.replace('<link rel="stylesheet" href="style.css">', '<style>' + css + '</style>')
-for name in ('logo', 'person', 'desk'):
+html = html.replace('<link rel="stylesheet" href="assets/outer-shadows.css">', '<style>' + shadow_css + '</style>')
+for name in ('logo', 'person', 'desk', 'person-outer-shadow', 'desk-outer-shadow'):
     data = base64.b64encode((root / f'assets/{name}.png').read_bytes()).decode()
     html = html.replace(f'assets/{name}.png', 'data:image/png;base64,' + data)
 js = (root / 'projects.js').read_text().replace('export const projects', 'const projects')

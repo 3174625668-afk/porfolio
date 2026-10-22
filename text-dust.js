@@ -1,108 +1,132 @@
-// Text-only particles: the live, accessible title stays in the DOM throughout.
-export function attachTextDust(target) {
-  const title = target.querySelector('strong');
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  let layer, context, points = [], frame = 0, started = 0, cursor = { x: 0, y: 0 };
-  const padding = 24;
+// Cache dense stipple textures during idle time. Hover never samples glyphs or runs a paint loop.
+const dustMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const dustPointer = matchMedia('(hover: hover) and (pointer: fine)');
+const dustEntries = new Set();
+let dustTimer;
 
-  function build() {
-    const rect = title.getBoundingClientRect();
-    const style = getComputedStyle(title);
-    const mask = document.createElement('canvas');
-    mask.width = Math.ceil(rect.width);
-    mask.height = Math.ceil(rect.height);
-    const ink = mask.getContext('2d', { willReadFrequently: true });
-    ink.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-    ink.fillStyle = '#111';
-    ink.textBaseline = 'alphabetic';
-    const ascent = ink.measureText('M').fontBoundingBoxAscent;
-    const range = document.createRange();
-    const textNodes = document.createTreeWalker(title, NodeFilter.SHOW_TEXT);
-    // Follow real glyph positions, including deliberate desktop line breaks.
-    while (textNodes.nextNode()) {
-      const text = textNodes.currentNode;
-      for (let i = 0; i < text.length; i++) {
-        if (/\s/.test(text.textContent[i])) continue;
-        range.setStart(text, i);
-        range.setEnd(text, i + 1);
-        const box = range.getBoundingClientRect();
-        ink.fillText(text.textContent[i], box.x - rect.x, box.y - rect.y + ascent);
-      }
-    }
-    const pixels = ink.getImageData(0, 0, mask.width, mask.height).data;
-    points = [];
-    for (let y = 1; y < mask.height; y += 2) {
-      for (let x = 1; x < mask.width; x += 2) {
-        if (pixels[(y * mask.width + x) * 4 + 3] > 100) {
-          const seed = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
-          points.push({ x, y, random: seed - Math.floor(seed) });
-        }
-      }
-    }
-    if (!layer) {
-      layer = document.createElement('canvas');
-      layer.className = 'title-dust';
-      layer.setAttribute('aria-hidden', 'true');
-      target.append(layer);
-    }
-    const scale = Math.min(devicePixelRatio || 1, 2);
-    const layerWidth = Math.min(rect.width + padding * 2, document.documentElement.clientWidth - rect.left + padding);
-    layer.width = Math.ceil(layerWidth * scale);
-    layer.height = Math.ceil((rect.height + padding * 2) * scale);
-    layer.style.width = layerWidth + 'px';
-    layer.style.height = rect.height + padding * 2 + 'px';
-    context = layer.getContext('2d');
-    context.scale(scale, scale);
-  }
+function duringIdle(task) {
+  if ('requestIdleCallback' in window) requestIdleCallback(task, { timeout: 800 });
+  else setTimeout(task, 32);
+}
 
-  function draw(now) {
-    if (!target.classList.contains('is-dispersing') || motion.matches) return;
-    const progress = Math.min(1, (now - started) / 280);
-    const eased = 1 - (1 - progress) ** 3;
-    const width = parseFloat(layer.style.width), height = parseFloat(layer.style.height);
-    context.clearRect(0, 0, width, height);
-    context.fillStyle = '#111';
-    context.shadowColor = 'rgba(17,17,17,.28)';
-    context.shadowBlur = .9;
-    for (const point of points) {
-      const dx = point.x - cursor.x, dy = point.y - cursor.y;
-      const distance = Math.hypot(dx, dy);
-      const influence = Math.max(0, 1 - distance / 145);
-      const angle = point.random * Math.PI * 2;
-      const spread = eased * (1 + influence * 8) * (0.35 + point.random * .65);
-      const drift = Math.sin(now / 620 + point.random * 6) * .7 * eased;
-      const x = point.x + Math.cos(angle) * spread + drift;
-      const y = point.y + Math.sin(angle) * spread + drift;
-      context.globalAlpha = .65 + point.random * .35;
-      context.beginPath();
-      context.arc(x + padding, y + padding, .6 + point.random * .5, 0, Math.PI * 2);
-      context.fill();
-    }
-    frame = requestAnimationFrame(draw);
-  }
-
-  function stop() {
-    cancelAnimationFrame(frame);
-    target.classList.remove('is-dispersing');
-  }
-  target.addEventListener('pointerenter', event => {
-    if (event.pointerType !== 'mouse' || motion.matches) return;
-    const rect = title.getBoundingClientRect();
-    cursor = { x: event.clientX - rect.x, y: event.clientY - rect.y };
-    build();
-    cancelAnimationFrame(frame);
-    started = performance.now();
-    target.classList.add('is-dispersing');
-    frame = requestAnimationFrame(draw);
+function prepareDust(entry) {
+  if (entry.ready || dustMotion.matches || !dustPointer.matches) return;
+  const { target, title } = entry;
+  const panel = target.closest('.projects');
+  // Measure hidden sections without revealing them or changing the live layout.
+  const measuringPanel = document.createElement('section');
+  measuringPanel.className = panel.className;
+  measuringPanel.setAttribute('aria-hidden', 'true');
+  measuringPanel.inert = true;
+  Object.assign(measuringPanel.style, {
+    left: '-10000px', right: 'auto', top: '0', visibility: 'hidden', animation: 'none', pointerEvents: 'none',
   });
-  target.addEventListener('pointermove', event => {
-    const rect = title.getBoundingClientRect();
-    cursor = { x: event.clientX - rect.x, y: event.clientY - rect.y };
+  const list = document.createElement('div');
+  list.className = 'entries';
+  let measuredTarget;
+  // Retain nth-child width rules and the title's explicit line spans.
+  for (const source of panel.querySelector('.entries').children) {
+    const row = source.cloneNode(true);
+    row.removeAttribute('id');
+    row.removeAttribute('aria-describedby');
+    row.classList.remove('is-dispersing');
+    row.querySelectorAll('canvas').forEach(canvas => canvas.remove());
+    row.querySelectorAll('[id]').forEach(element => element.removeAttribute('id'));
+    list.append(row);
+    if (source === target) measuredTarget = row;
+  }
+  measuringPanel.append(list);
+  panel.parentNode.append(measuringPanel);
+  const measuredTitle = measuredTarget.querySelector('strong');
+  const rect = measuredTitle.getBoundingClientRect();
+  const style = getComputedStyle(measuredTitle);
+  const padding = 12;
+  const mask = document.createElement('canvas');
+  mask.width = Math.ceil(rect.width);
+  mask.height = Math.ceil(rect.height);
+  const ink = mask.getContext('2d', { willReadFrequently: true });
+  ink.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  const ascent = ink.measureText('M').fontBoundingBoxAscent || parseFloat(style.fontSize) * .9;
+  const range = document.createRange();
+  const walker = document.createTreeWalker(measuredTitle, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) {
+    const text = walker.currentNode;
+    for (let i = 0; i < text.length; i++) {
+      if (/\s/.test(text.textContent[i])) continue;
+      range.setStart(text, i);
+      range.setEnd(text, i + 1);
+      const box = range.getBoundingClientRect();
+      ink.fillText(text.textContent[i], box.x - rect.x, box.y - rect.y + ascent);
+    }
+  }
+  measuringPanel.remove();
+  const pixels = ink.getImageData(0, 0, mask.width, mask.height).data;
+  const layer = entry.layer || document.createElement('canvas');
+  layer.className = 'title-dust';
+  layer.setAttribute('aria-hidden', 'true');
+  layer.width = mask.width + padding * 2;
+  layer.height = mask.height + padding * 2;
+  layer.style.width = layer.width + 'px';
+  layer.style.height = layer.height + 'px';
+  const context = layer.getContext('2d');
+  // Small solid stamps, no per-dot blur/shadow, no arcs, and no device-pixel-ratio multiplier.
+  context.fillStyle = 'rgba(17,17,17,.9)';
+  for (let y = 1; y < mask.height; y += 2) {
+    for (let x = 1; x < mask.width; x += 2) {
+      if (pixels[(y * mask.width + x) * 4 + 3] < 100) continue;
+      const seed = Math.imul(x + 1, 73856093) ^ Math.imul(y + 1, 19349663);
+      const dx = ((seed >>> 2) % 9 - 4) * .65;
+      const dy = ((seed >>> 10) % 9 - 4) * .65;
+      const size = .85 + (seed >>> 20) % 3 * .22;
+      context.fillRect(x + padding + dx, y + padding + dy, size, size);
+    }
+  }
+  if (!entry.layer) target.append(layer);
+  entry.layer = layer;
+  entry.ready = true;
+  target.classList.add('dust-ready');
+}
+
+function warmDust() {
+  if (!dustPointer.matches || dustMotion.matches) return;
+  const queue = [...dustEntries].filter(entry => !entry.ready);
+  function next() {
+    const entry = queue.shift();
+    if (entry) {
+      if (dustEntries.has(entry)) prepareDust(entry);
+      if (queue.length) duringIdle(next);
+    }
+  }
+  duringIdle(next);
+}
+
+export function attachTextDust(target) {
+  const entry = { target, title: target.querySelector('strong'), ready: false, layer: null };
+  dustEntries.add(entry);
+  function stop() { target.classList.remove('is-dispersing'); }
+  target.addEventListener('pointerenter', event => {
+    if (event.pointerType !== 'mouse' || dustMotion.matches) return;
+    // A CSS stipple fallback is instant even if an idle cache is not ready yet.
+    target.classList.add('is-dispersing');
   });
   target.addEventListener('pointerleave', stop);
-  motion.addEventListener('change', stop);
-  new MutationObserver(() => {
-    if (target.closest('.projects').hidden) stop();
-  }).observe(target.closest('.projects') || target.parentNode || target, { attributes: true, attributeFilter: ['hidden'] });
-  window.addEventListener('resize', stop, { passive: true });
+  new MutationObserver(() => { if (target.closest('.projects').hidden) stop(); })
+    .observe(target.closest('.projects'), { attributes: true, attributeFilter: ['hidden'] });
+  // Register all titles first, and wait for the final font before caching.
+  clearTimeout(dustTimer);
+  dustTimer = setTimeout(() => document.fonts.ready.then(warmDust), 0);
 }
+
+window.addEventListener('resize', () => {
+  clearTimeout(dustTimer);
+  for (const entry of dustEntries) {
+    entry.ready = false;
+    entry.target.classList.remove('is-dispersing', 'dust-ready');
+  }
+  dustTimer = setTimeout(warmDust, 180);
+}, { passive: true });
+dustMotion.addEventListener('change', () => {
+  if (dustMotion.matches) for (const entry of dustEntries) entry.target.classList.remove('is-dispersing');
+  else warmDust();
+});
+dustPointer.addEventListener('change', warmDust);
