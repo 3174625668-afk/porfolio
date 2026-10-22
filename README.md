@@ -1,1 +1,17 @@
 # porfolio
+
+## Homepage preview
+
+![Homepage](previews/home-desktop.png)
+
+[Art Practice](previews/home-art.png) · [Research & Curation](previews/home-research.png) · [Mobile](previews/home-mobile.png)
+
+### Live interactive preview
+
+In repository **Settings → Pages**, choose **Deploy from a branch**, select **main** and **/ (root)**, then **Save**. Once GitHub finishes deployment, the expected address is:
+
+https://3174625668-afk.github.io/porfolio/
+
+The address is available only after Pages is enabled and deployment succeeds. The website needs no build step. Hover or tap either illustration to open its project list. Project details are pending homepage approval.
+
+For a local preview, download the repository ZIP, extract it, and run `python -m http.server 3000` from the extracted directory. Open `http://localhost:3000` on that same computer.
