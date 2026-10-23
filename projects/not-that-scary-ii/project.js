@@ -1,4 +1,4 @@
-import { series, staticLayout } from './series-data.js?v=balance-4';
+import { series, staticLayout } from './series-data.js?v=balance-5';
 
 const overview = document.querySelector('#artworks');
 const worksById = new Map(series.works.map(work => [work.id, work]));
