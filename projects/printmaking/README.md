@@ -36,3 +36,12 @@ use their own complete natural ratio, with intrinsic dimensions and lazy loading
 
 This revision changes only Printmaking files. The homepage destination was already
 connected and is not modified, and all other project pages and originals stay intact.
+
+## Self-contained public preview
+
+Run `node projects/printmaking/build-static.mjs` after changing gallery data or CSS.
+It generates `index.html` and `clusters-v2.html` with identical cluster markup and
+inline styles. Neither page needs JavaScript or separately cached stylesheets to
+render. `clusters-v2.html` provides a distinct preview URL for checking whether a
+Pages deployment contains this revision. The data and CSS remain the edit sources;
+regenerate rather than editing the generated HTML directly.
