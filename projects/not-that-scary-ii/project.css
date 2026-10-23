@@ -22,6 +22,10 @@ h1 { margin: 0; font-size: clamp(56px, 6.5vw, 104px); line-height: 1.02; letter-
 .artwork-trigger { display: block; width: 100%; margin: 0; padding: 0; border: 0; border-radius: 0; background: none; color: inherit; cursor: pointer; }
 .artwork-trigger:focus-visible { outline: 1px solid #777; outline-offset: 4px; }
 .artwork img { display: block; width: 100%; height: auto; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .artwork-trigger img { transform-origin: center; transition: transform 200ms ease-out; }
+  .artwork-trigger:hover img { transform: scale(1.035); }
+}
 figcaption { position: absolute; top: calc(100% - 42px + 9px); left: 0; width: 100%; margin: 0; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 200ms ease, visibility 0s linear 200ms; }
 .artwork.is-active figcaption { opacity: 1; visibility: visible; transition-delay: 0s; }
 .caption-chinese { display: block; font-size: 13px; font-weight: 400; line-height: 19px; letter-spacing: .025em; }
