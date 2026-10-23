@@ -9,6 +9,18 @@ const imageGeometry = {
   h: { width: 1902, height: 1189, longestSideCm: 38 },
 };
 
+// Intrinsic dimensions of the uploaded WebPs, separate from thumbnail geometry.
+const fullImageGeometry = {
+  a: { fullWidth: 2495, fullHeight: 3669 },
+  b: { fullWidth: 3702, fullHeight: 2573 },
+  c: { fullWidth: 2341, fullHeight: 3668 },
+  d: { fullWidth: 3774, fullHeight: 2692 },
+  e: { fullWidth: 2779, fullHeight: 3745 },
+  f: { fullWidth: 3800, fullHeight: 2580 },
+  g: { fullWidth: 2532, fullHeight: 3660 },
+  h: { fullWidth: 3910, fullHeight: 2401 },
+};
+
 // Editable titles and media paths. Never substitute a thumbnail for a fullImage.
 export const series = {
   title: 'Not That Scary Ⅱ',
@@ -26,9 +38,10 @@ export const series = {
   ].map(work => ({
     ...work,
     ...imageGeometry[work.id],
+    ...fullImageGeometry[work.id],
     thumbnail: `../../public/images/not-that-scary-ii/${work.id}.jpg`,
-    fullImage: null, // Set only after the real high-resolution file is uploaded.
-    plannedFullImage: `../../public/images/not-that-scary-ii/full/${work.id}.jpg`,
+    fullImage: `../../public/images/not-that-scary-ii/full/${work.id}.webp`,
+    plannedFullImage: `../../public/images/not-that-scary-ii/full/${work.id}.webp`,
   })),
 };
 

@@ -1,7 +1,8 @@
-import { series, staticLayout } from './series-data.js?v=names-1';
+import { series, staticLayout, viewingOrder } from './series-data.js?v=full-1';
 
 const overview = document.querySelector('#artworks');
 const worksById = new Map(series.works.map(work => [work.id, work]));
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 // Authored positions and viewing order stay separate from the image files.
 // All long edges share one physical scale; the original caption space stays reserved.
@@ -50,7 +51,14 @@ for (const placement of staticLayout.placements) {
   trigger.addEventListener('pointerleave', event => {
     if (event.pointerType === 'mouse' && activeFigure === figure) activate(null);
   });
-  trigger.addEventListener('click', () => activate(figure));
+  trigger.addEventListener('click', () => {
+    activate(figure);
+    const target = document.getElementById(`work-${work.id}`);
+    if (target) {
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
+    }
+  });
   trigger.addEventListener('focus', () => {
     if (trigger.matches(':focus-visible')) activate(figure);
   });
@@ -90,4 +98,42 @@ for (const { type, x, y, size } of staticLayout.decorations) {
     if (type === 'star') decoration.style.height = `${size}px`;
   }
   overview.append(decoration);
+}
+
+// The reading sequence is independent of the authored overview positions.
+const fullWorks = document.querySelector('#full-works');
+for (const id of viewingOrder) {
+  const work = worksById.get(id);
+  if (!work?.fullImage) continue;
+
+  const figure = document.createElement('figure');
+  figure.id = `work-${id}`;
+  figure.className = 'full-work';
+  figure.tabIndex = -1;
+  figure.setAttribute('aria-labelledby', `full-title-${id}`);
+
+  const image = document.createElement('img');
+  image.className = 'full-image';
+  image.src = work.fullImage;
+  image.alt = `${work.chineseTitle} — ${work.englishTitle}`;
+  image.width = work.fullWidth;
+  image.height = work.fullHeight;
+  image.loading = 'lazy';
+  image.decoding = 'async';
+
+  const caption = document.createElement('figcaption');
+  caption.className = 'full-caption';
+  const title = document.createElement('h2');
+  title.id = `full-title-${id}`;
+  title.lang = 'zh-CN';
+  title.textContent = work.chineseTitle;
+  const english = document.createElement('p');
+  english.className = 'full-english';
+  english.textContent = work.englishTitle;
+  const metadata = document.createElement('p');
+  metadata.className = 'full-metadata';
+  metadata.textContent = `${work.medium} · ${work.dimensions} · ${work.year}`;
+  caption.append(title, english, metadata);
+  figure.append(image, caption);
+  fullWorks.append(figure);
 }
