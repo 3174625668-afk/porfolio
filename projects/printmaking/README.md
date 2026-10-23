@@ -1,6 +1,6 @@
-# Printmaking — static clustered edition
+# Printmaking — clustered edition
 
-22 original WebPs form nine distinct viewing units. Images remain static.
+22 original WebPs form nine distinct viewing units. The established layout remains fixed; artworks now have a one-time scroll entrance.
 Hover, keyboard focus or touch reveals one caption for the 18 standalone images.
 Apple has one permanent shared series label; no lightbox is added.
 
@@ -61,3 +61,11 @@ Collision checks include images, decorations, title, navigation and the shared
 series label. No image,
 cluster or page dimension changes. Reduced motion disables label transitions.
 The build inlines the small caption script too, avoiding cached script versions.
+
+## Scroll entrance
+
+The builder inlines `../shared/scroll-reveal.js` and opts in only `.artwork` figures.
+This adds a one-time 16px rise/fade below the viewport without changing cluster
+geometry or interfering with child caption effects. The permanent Apple series
+label and decorative stars/lines remain stationary. Reduced-motion users and
+unsupported browsers retain the fully visible, original static layout.

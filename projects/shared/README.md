@@ -35,3 +35,28 @@ content record to `project-data.js`. Both formats continue using `detail.css` an
 No PDF embeds, downloads, nested scroll containers, carousels, animation, image
 filters or placeholder images are included. Stars and lines use the homepage's
 four-point polygon, black fill and one-pixel line style, scoped to these pages.
+
+## One-time scroll entrance (opt-in)
+
+`scroll-reveal.js` is enabled only by a page's `data-scroll-reveal` selector.
+The added research readers select each reading image; The Law selects an entire
+single/spread trigger; Not That Scary Ⅱ selects overview figures and full-work units;
+Printmaking selects individual artwork figures. Their original DOM, dimensions,
+spacing, reading order, decorations and child hover transforms stay intact.
+
+Only targets still below the viewport are prepared. They fade in and rise 16px
+once over 520ms, matching the existing art-project effect. Already-visible/passed
+targets are never reset. Hover, touch and focus complete the target immediately so
+captions, zoom and jump links remain responsive. Effects are canceled after finishing,
+leaving the identical visible base style. No CSS permanently hides any image.
+
+Intersection Observer is backed by passive, frame-batched scroll checks. A child-list
+observer handles readers that render or discover pages asynchronously. Unsupported
+APIs, animation failures, reduced-motion changes and history/pagehide restore readable
+base styles. Only pending entrances need scroll listeners. No persistent `will-change`,
+scroll snapping, parallax, scale or image processing is introduced.
+
+The two reference projects (Nothing, Yet Not Nothing and Not That Scary) and To the
+Last Ounce retain their existing equivalent animations; this helper is not layered
+onto them. The homepage remains unchanged. Printmaking's static builder inlines this
+same helper so its canonical and comparison pages remain self-contained.

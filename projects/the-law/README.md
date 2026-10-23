@@ -34,7 +34,8 @@ No borders, shadows, page overlays or artificial gutters are added.
 Mobile scales the complete horizontal unit; it never stacks the two pages.
 The cover, poster and invitation follow their own original image proportions.
 First image loads eagerly, later images lazily; dimensions reserve reading space.
-Only the heading has a gentle, one-time entrance, disabled for reduced motion.
+The heading and each reading unit have gentle, one-time entrances, disabled for
+reduced motion. A double spread animates as one complete unit, never two halves.
 
 ## Full-spread viewing
 

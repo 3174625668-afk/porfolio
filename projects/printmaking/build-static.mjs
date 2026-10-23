@@ -8,6 +8,7 @@ const escape = value => String(value).replace(/[&<>"']/g, char => ({
 }[char]));
 const artworks = new Map(artworkRecords.map(work => [work.id, work]));
 const captionsJS = await readFile(new URL('captions.js', import.meta.url), 'utf8');
+const scrollRevealJS = await readFile(new URL('../shared/scroll-reveal.js', import.meta.url), 'utf8');
 const css = await readFile(new URL('gallery.css', import.meta.url), 'utf8');
 let imageIndex = 0;
 const groups = galleryGroups.map(group => {
@@ -45,7 +46,7 @@ const html = `<!doctype html>
   <style>
 ${css}  </style>
 </head>
-<body>
+<body data-scroll-reveal=".artwork">
   <main>
     <a class="back-home" href="../../">BACK TO HOME</a>
     <header class="gallery-header">
@@ -61,6 +62,8 @@ ${groups}
   </main>
   <script>
 ${captionsJS}  </script>
+  <script>
+${scrollRevealJS}  </script>
 </body>
 </html>
 `;
