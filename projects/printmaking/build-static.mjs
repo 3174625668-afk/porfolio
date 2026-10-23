@@ -1,12 +1,13 @@
 // Render the confirmed cluster layout into HTML so the public preview has no
 // dependency on cached CSS/JS modules. Original image files are referenced unchanged.
 import { readFile, writeFile } from 'node:fs/promises';
-import { artworkRecords, galleryGroups } from './gallery-data.js';
+import { artworkRecords, galleryGroups, series } from './gallery-data.js';
 
 const escape = value => String(value).replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 }[char]));
 const artworks = new Map(artworkRecords.map(work => [work.id, work]));
+const captionsJS = await readFile(new URL('captions.js', import.meta.url), 'utf8');
 const css = await readFile(new URL('gallery.css', import.meta.url), 'utf8');
 let imageIndex = 0;
 const groups = galleryGroups.map(group => {
@@ -16,7 +17,12 @@ const groups = galleryGroups.map(group => {
   }).join(' ');
   const works = group.artworkIds.map(id => {
     const work = artworks.get(id);
-    return `      <figure class="artwork" data-artwork-id="${escape(work.id)}"><img src="${escape(work.image)}" alt="${escape(work.title || `Printmaking artwork ${work.id}`)}" width="${work.pixelWidth}" height="${work.pixelHeight}" loading="${imageIndex++ === 0 ? 'eager' : 'lazy'}" decoding="async"></figure>`;
+    const shared = series[work.seriesId];
+    const chinese = work.titleZh;
+    const english = work.title || shared?.name;
+    const title = chinese || english;
+    const caption = `<figcaption class="artwork-caption" id="caption-${work.id}"><span class="caption-title"${chinese ? ' lang="zh"' : ''}>${escape(title)}</span>${chinese && english && chinese !== english ? `<span class="caption-english">${escape(english)}</span>` : ''}<span class="caption-details">${escape(work.medium)} · ${escape(work.year)}</span></figcaption>`;
+    return `      <figure class="artwork" data-artwork-id="${escape(work.id)}" tabindex="0" role="button" aria-label="${escape([chinese, english].filter(Boolean).join(' / '))}" aria-expanded="false" aria-controls="caption-${work.id}"><img src="${escape(work.image)}" alt="${escape(title)}" width="${work.pixelWidth}" height="${work.pixelHeight}" loading="${imageIndex++ === 0 ? 'eager' : 'lazy'}" decoding="async">${caption}</figure>`;
   });
   const marks = group.decorations.map(mark => `      <span class="cluster-decoration ${mark.type}" aria-hidden="true" style="left:${mark.x}%;width:${mark.size}px;${mark.type === 'star' ? `height:${mark.size}px;` : ''}"></span>`);
   return `    <div class="gallery-cluster layout-${group.layout} align-${group.align}" data-layout-group="${group.id}" style="--cluster-width:${group.maxWidth}px;--ratio-columns:${columns}">\n${[...works, ...marks].join('\n')}\n    </div>`;
@@ -47,6 +53,8 @@ ${css}  </style>
 ${groups}
     </section>
   </main>
+  <script>
+${captionsJS}  </script>
 </body>
 </html>
 `;

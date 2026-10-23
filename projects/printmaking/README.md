@@ -1,7 +1,7 @@
 # Printmaking — static clustered edition
 
-22 original WebPs form nine distinct viewing units. There are no hover effects,
-image links, lightboxes, captions, group labels or animations.
+22 original WebPs form nine distinct viewing units. Images remain static.
+Hover, keyboard focus or touch reveals a single caption; no lightbox is added.
 
 ## Editorial structure
 
@@ -17,8 +17,8 @@ image links, lightboxes, captions, group labels or animations.
 
 These are visual relationships, not newly asserted media or formal series. Apple
 remains the only confirmed series: the teacher's `纯艺（20页）_19.jpg` explicitly labels
-12–15 together. All other series, artwork titles, physical dimensions, media and
-years remain exactly as previously stored (null). Pixel sizes only describe files.
+12–15 together. Confirmed bilingual titles, media and years come from
+`gallery-data.js`; physical dimensions remain null. Pixel sizes describe files only.
 
 ## Layout and data
 
@@ -45,3 +45,14 @@ inline styles. Neither page needs JavaScript or separately cached stylesheets to
 render. `clusters-v2.html` provides a distinct preview URL for checking whether a
 Pages deployment contains this revision. The data and CSS remain the edit sources;
 regenerate rather than editing the generated HTML directly.
+
+## Artwork captions
+
+`captions.js` opens one label on pointer hover, focus or touch and closes it on
+leaving, blur, Escape or an outside tap. All names and media/year lines are rendered
+from the data at build time; Apple uses its shared series name. Overlay labels
+prefer the 8px space beneath an image. When tight rows make this impossible,
+they use nearby clear space above/beside the image or at the group's edge.
+Collision checks include images, decorations, title and navigation. No image,
+cluster or page dimension changes. Reduced motion disables label transitions.
+The build inlines the small caption script too, avoiding cached script versions.
