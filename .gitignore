@@ -1,0 +1,9 @@
+# Research source documents must stay local, never in the public repository.
+*.[pP][dD][fF]
+/.private/
+/local-research/
+/research-local/
+/watermark-work/
+**/*-unwatermarked.*
+**/*-before-watermark.*
+**/__pycache__/
