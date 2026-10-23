@@ -1,5 +1,5 @@
 import { renderProject } from '../shared/detail.js?v=ounce-pages-1';
-import { researchProjects } from './project-data.js?v=watermark-prep-1';
+import { researchProjects } from './project-data.js?v=moments-1';
 
 // Shared rendering preserves each exported page's true ratio and original order.
 // No remote directory discovery, PDF embeds, downloads or synthetic sample pages.

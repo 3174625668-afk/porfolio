@@ -1,0 +1,20 @@
+/* Scoped to this proposal. Each uploaded page is a 2:1 spread, not an A4 sheet. */
+body[data-project='moments-in-between'] h1 {
+  animation: moments-title-in 600ms ease-out both;
+}
+body[data-project='moments-in-between'] .project-type {
+  margin: 16px 0 0; color: #666; font-size: 13px; line-height: 1.5;
+}
+body[data-project='moments-in-between'] .title-star {
+  top: -28px; left: 56%; width: 9px; height: 9px;
+}
+body[data-project='moments-in-between'] .title-line {
+  top: -16px; right: 4%; width: 42px;
+}
+@keyframes moments-title-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-project='moments-in-between'] h1 { animation: none; }
+}

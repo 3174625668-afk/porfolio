@@ -1,4 +1,4 @@
-import { ready } from './reader.js?v=watermark-prep-1';
+import { ready } from './reader.js?v=moments-1';
 
 await ready;
 if (document.body.dataset.section === 'research' && document.querySelector('.reading-page img') && 'showModal' in HTMLDialogElement.prototype) {

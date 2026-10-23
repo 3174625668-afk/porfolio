@@ -11,7 +11,7 @@ export const projects = {
   ],
   research: [
     { id: 'art-brut-and-naive-art', displayTitle: 'Art Brut and Naïve Art', fullTitle: 'Art Brut and Naïve Art: Challenging the Canon, Expanding Expression', category: 'RESEARCH ESSAY' },
-    { id: 'moments-in-between', displayTitle: 'Moments in Between', fullTitle: 'Moments in Between', category: 'CURATORIAL PROPOSAL' },
+    { id: 'moments-in-between', displayTitle: 'Moments in Between', fullTitle: 'Moments in Between', category: 'CURATORIAL PROPOSAL', href: 'projects/moments-in-between/' },
     { id: 'at-that-time-this-moment', displayTitle: 'At That Time, This Moment', fullTitle: 'At That Time, This Moment', category: 'EXHIBITION REVIEW' },
     { id: 'printmaking-aesthetic-education', displayTitle: "The Value of Printmaking in Children's Aesthetic Education", fullTitle: "The Value of Printmaking in Children's Aesthetic Education", category: 'PUBLISHED ARTICLE · CHINESE' },
   ],
