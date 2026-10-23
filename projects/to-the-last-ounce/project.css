@@ -15,6 +15,12 @@ body[data-project='to-the-last-ounce'] .project-header > .line {
 .ounce-title-star-low { bottom: 18px; left: 65%; width: 7px; height: 7px; --ounce-delay: 280ms; }
 .ounce-title-line-top { top: -22px; right: 10%; width: 44px; --ounce-delay: 200ms; }
 body[data-project='to-the-last-ounce'] .reading-page { position: relative; }
+.ounce-page-surface { position: relative; width: 100%; }
+.ounce-video-link { position: absolute; display: block; min-height: 28px; transform: translateY(-50%); cursor: pointer; }
+.ounce-video-link:focus-visible { outline: 1px solid #777; outline-offset: 3px; }
+@media (pointer: coarse) {
+  .ounce-video-link { min-height: 32px; }
+}
 .ounce-page-star { width: 10px; height: 10px; }
 .ounce-page-line { width: var(--ounce-line-width); }
 .ounce-page-star.ounce-left { left: calc(-1 * var(--ounce-star-offset)); }

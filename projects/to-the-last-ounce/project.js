@@ -3,12 +3,40 @@ import '../shared/detail.js?v=ounce-pages-1';
 
 if (document.body.dataset.project === 'to-the-last-ounce') {
   const pages = [...document.querySelectorAll('.reading-page')];
+  const videoUrl = 'https://youtu.be/La-A-LB2hyU';
+  // Original 4400 × 2200 image coordinates around the printed blue links.
+  const videoRegions = {
+    '纯艺（20页）_06.jpg': { x: 2553, y: 327, width: 1118, height: 96 },
+    '纯艺（20页）_08.jpg': { x: 2439, y: 805, width: 1138, height: 93 },
+  };
   const ornaments = [
     [{ type: 'star', side: 'left', top: 22 }, { type: 'line', side: 'right', top: 70 }],
     [{ type: 'line', side: 'left', top: 40 }, { type: 'star', side: 'right', top: 18 }],
     [{ type: 'star', side: 'left', top: 62 }, { type: 'line', side: 'right', top: 32 }],
   ];
   pages.forEach((page, index) => {
+    const image = page.querySelector('img');
+    const surface = document.createElement('div');
+    surface.className = 'ounce-page-surface';
+    image.replaceWith(surface);
+    surface.append(image);
+    const filename = decodeURIComponent(new URL(image.src).pathname.split('/').pop());
+    const region = videoRegions[filename];
+    if (region) {
+      const sourceWidth = Number(image.getAttribute('width'));
+      const sourceHeight = Number(image.getAttribute('height'));
+      const link = document.createElement('a');
+      link.className = 'ounce-video-link';
+      link.href = videoUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', 'Watch To the Last Ounce on YouTube (opens in a new tab)');
+      link.style.left = `${region.x / sourceWidth * 100}%`;
+      link.style.top = `${(region.y + region.height / 2) / sourceHeight * 100}%`;
+      link.style.width = `${region.width / sourceWidth * 100}%`;
+      link.style.height = `${region.height / sourceHeight * 100}%`;
+      surface.append(link);
+    }
     for (const { type, side, top } of ornaments[index] || []) {
       const mark = document.createElement('span');
       mark.className = `${type} ounce-page-${type} ounce-${side}`;
@@ -77,7 +105,8 @@ if (document.body.dataset.project === 'to-the-last-ounce') {
 
       for (const page of pages) {
         if (page.getBoundingClientRect().top < window.innerHeight) continue;
-        const animation = page.querySelector('img').animate(
+        // Animate the image and its clickable region together so they stay aligned.
+        const animation = page.querySelector('.ounce-page-surface').animate(
           [{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'translateY(0)' }],
           { duration: 520, easing: 'ease-out', fill: 'both' },
         );
