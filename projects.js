@@ -13,6 +13,6 @@ export const projects = {
     { id: 'art-brut-and-naive-art', displayTitle: 'Art Brut and Naive Art', fullTitle: 'Art Brut and Naive Art', category: 'RESEARCH ESSAY', href: 'projects/art-brut-and-naive-art/' },
     { id: 'moments-in-between', displayTitle: 'Moments in Between', fullTitle: 'Moments in Between', category: 'CURATORIAL PROPOSAL', href: 'projects/moments-in-between/' },
     { id: 'at-that-time-this-moment', displayTitle: 'At That Time, This Moment', fullTitle: 'At That Time, This Moment', category: 'EXHIBITION REVIEW', href: 'projects/at-that-time-this-moment/' },
-    { id: 'printmaking-aesthetic-education', displayTitle: "The Value of Printmaking in Children's Aesthetic Education", fullTitle: "The Value of Printmaking in Children's Aesthetic Education", category: 'PUBLISHED ARTICLE · CHINESE' },
+    { id: 'printmaking-aesthetic-education', displayTitle: "The Value of Printmaking in Children's Aesthetic Education", fullTitle: "The Value of Printmaking in Children's Aesthetic Education", category: 'PUBLISHED ARTICLE · CHINESE', href: 'projects/printmaking-aesthetic-education/' },
   ],
 };

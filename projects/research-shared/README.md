@@ -8,9 +8,9 @@ unmarked exports, fake papers or synthetic demo pages belong in these readers.
 | At That Time, This Moment | projects/at-that-time-this-moment/ | public/images/research/at-that-time-this-moment/pages/ | 01–05 |
 | Art Brut and Naive Art | projects/art-brut-and-naive-art/ | public/images/research/art-brut-and-naive-art/pages/ | 01–14 |
 | Moments in Between | projects/moments-in-between/ | public/images/research/exhibition-proposal/pages/ | 01–12 |
-| The Value of Printmaking in Children's Aesthetic Education | Not yet published | public/images/printmaking-aesthetic-education/pages/ | Empty |
+| The Value of Printmaking in Children's Aesthetic Education | projects/printmaking-aesthetic-education/ | public/images/research/value-of-printmaking/pages/ | 01–02 |
 
-All three prepared project pages are linked from the existing homepage entries;
+All four prepared project pages are linked from the existing homepage entries;
 there are no duplicate Exhibition Proposal or space-containing project routes.
 Art Brut and Naive Art uses the latest confirmed display spelling. Its previously
 provided longer essay title is retained separately as `paperTitle` in the data,
@@ -52,3 +52,7 @@ is scoped to these two projects and does not change the Moments reading behavior
 If both the verified data and uploaded directory are empty, the title/navigation
 remain but no placeholder, invented text or empty viewer is displayed. All original
 research input PDFs remain private and outside the public repository.
+
+The two-page Chinese journal article uses its own small reader entry and the
+shared portrait renderer/viewer. Its type is Published Journal Article. No abstract,
+translation, journal name, year or other unconfirmed publication data is added.

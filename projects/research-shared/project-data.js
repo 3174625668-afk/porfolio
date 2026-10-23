@@ -69,10 +69,13 @@ export const researchProjects = {
   'printmaking-aesthetic-education': {
     displayTitle: "The Value of Printmaking in Children's Aesthetic Education",
     fullTitle: "The Value of Printmaking in Children's Aesthetic Education",
-    type: 'PUBLISHED ARTICLE · CHINESE',
+    type: 'Published Journal Article',
     template: 'portrait',
     introduction: null,
-    imageDirectory: 'public/images/printmaking-aesthetic-education/pages/',
-    pages: [],
+    imageDirectory: 'public/images/research/value-of-printmaking/pages/',
+    pages: [
+      { file: '01.webp', alt: "The Value of Printmaking in Children's Aesthetic Education — page 1", width: 1489, height: 2105 },
+      { file: '02.webp', alt: "The Value of Printmaking in Children's Aesthetic Education — page 2", width: 1489, height: 2105 },
+    ],
   },
 };
