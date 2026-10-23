@@ -145,8 +145,9 @@ if (document.body.dataset.project === 'not-that-scary' && 'showModal' in HTMLDia
   }
   dialog.addEventListener('close', () => { if (!dialog.open) restoreReader(); });
   dialog.addEventListener('cancel', event => { event.preventDefault(); closeViewer(); });
+  // Closing touch controls and underlying images share compatibility-click suppression.
+  let lastTouch = -Infinity;
   function bindActivation(element, action) {
-    let lastTouch = -Infinity;
     element.addEventListener('pointerup', event => {
       if (element.disabled || !['touch', 'pen'].includes(event.pointerType)) return;
       const rect = element.getBoundingClientRect();

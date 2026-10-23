@@ -3,6 +3,17 @@ import { series, staticLayout, viewingOrder } from './series-data.js?v=full-1';
 const overview = document.querySelector('#artworks');
 const worksById = new Map(series.works.map(work => [work.id, work]));
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+// Fetch offscreen previews only as the visitor approaches them. The original
+// full-resolution URL is shared with the reading area and reused by the browser.
+const previewLoader = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+  for (const entry of entries) {
+    if (!entry.isIntersecting) continue;
+    const image = entry.target;
+    image.src = image.dataset.source;
+    delete image.dataset.source;
+    previewLoader.unobserve(image);
+  }
+}, { rootMargin: '100px 0px' }) : null;
 
 // Authored positions and viewing order stay separate from the image files.
 // All long edges share one physical scale; the original caption space stays reserved.
@@ -32,7 +43,9 @@ for (const placement of staticLayout.placements) {
   figure.style.setProperty('--mobile-width', `min(${width / 300 * 100}cqw, ${width / 300 * 360}px)`);
 
   const image = document.createElement('img');
-  image.src = work.fullImage;
+  image.loading = placement === staticLayout.placements[0] ? 'eager' : 'lazy';
+  if (previewLoader && image.loading === 'lazy') image.dataset.source = work.fullImage;
+  else image.src = work.fullImage;
   image.alt = `${work.chineseTitle} — ${work.englishTitle}`;
   image.width = work.width;
   image.height = work.height;
@@ -81,6 +94,7 @@ for (const placement of staticLayout.placements) {
   caption.append(chinese, english);
   figure.append(trigger, caption);
   overview.append(figure);
+  if (image.dataset.source) previewLoader.observe(image);
 }
 
 document.addEventListener('click', event => {

@@ -17,7 +17,9 @@ sequence. Historical layout studies are data only and are not rendered.
 `thumbnail` retains the original JPG paths for reference. Both the overview and reading area use `fullImage`, pointing to the original uploaded
 WebP in `public/images/not-that-scary-ii/full/`. Its intrinsic `fullWidth` and
 `fullHeight` are separate from thumbnail geometry and reserve space before loading.
-Reading-area images use native lazy loading. The overview retains its authored preview
+Reading-area images use native lazy loading. The first overview preview loads eagerly;
+other previews receive their original WebP URL within 100px of the viewport, with
+native lazy loading as the fallback when Intersection Observer is unavailable. The overview retains its authored preview
 boxes and contains the WebPs without cropping or stretching, preserving the composition
 despite small differences between the JPG and WebP aspect ratios.
 

@@ -1,5 +1,5 @@
 import { ready } from './reader.js?v=journal-1';
-import { attachResearchViewer } from '../research-shared/image-viewer.js?v=research-pages-1';
+import { attachResearchViewer } from '../research-shared/image-viewer.js?v=touch-close-2';
 
 await ready;
 // On this two-page reader, a touch close can dispatch a compatibility click onto

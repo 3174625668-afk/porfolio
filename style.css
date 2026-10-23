@@ -156,11 +156,13 @@ html { overflow-x: clip; }
 }
 @media (min-width: 901px) {
   /* With no outside gutters, let the long article clear the desk's tapered edge. */
-  .right .type-target:last-child { margin-top: max(0px, calc(3.75cqw - (100vw - 100cqw) / 2)); }
+  .right .type-target:last-child { margin-top: max(0px, calc(7cqw - (100vw - 100cqw) / 2)); }
 }
 
 @media (min-width: 901px) {
   .right .type-target:last-child strong {
+    line-height: .95;
     letter-spacing: clamp(-.125cqw, calc(-.125cqw + (100vw - 100cqw) / 160), -.025cqw);
   }
+  .right .type-target:last-child strong::first-line { letter-spacing: -.2cqw; }
 }

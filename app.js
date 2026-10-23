@@ -62,8 +62,6 @@ for (const [key, items] of Object.entries(projects)) {
     category.id = item.id + '-type';
     category.setAttribute('aria-hidden', 'true');
     button.append(title, category);
-    let pointerType = '';
-    button.addEventListener('pointerdown', event => { pointerType = event.pointerType; });
     button.addEventListener('pointerenter', event => {
       clearTimeout(exitTimer);
       if (event.pointerType === 'mouse') revealType(button);
@@ -83,13 +81,7 @@ for (const [key, items] of Object.entries(projects)) {
         revealType(button);
         return;
       }
-      // On touch, keep the first tap for the type; the next opens the project or notice.
-      const isTouch = event.detail !== 0 && (pointerType === 'touch' || pointerType === 'pen');
-      if (isTouch && activeProject !== button) {
-        revealType(button);
-        status.textContent = `${item.displayTitle}: ${item.category}. ${item.href ? 'Tap again to open project.' : 'Tap again for project availability.'}`;
-        return;
-      }
+      // A project title opens immediately with mouse, keyboard or a single tap.
       if (item.href) {
         window.location.assign(new URL(item.href, document.baseURI).href);
         return;

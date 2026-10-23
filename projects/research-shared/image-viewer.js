@@ -144,8 +144,10 @@ export function attachResearchViewer() {
     }
     dialog.addEventListener('close', () => { if (!dialog.open) restoreReader(); });
     dialog.addEventListener('cancel', event => { event.preventDefault(); closeViewer(); });
+    // Share touch suppression with the underlying page triggers: closing the
+    // modal must not let the compatibility click reopen the image beneath it.
+    let lastTouch = -Infinity;
     function bindActivation(element, action) {
-      let lastTouch = -Infinity;
       element.addEventListener('pointerup', event => {
         if (element.disabled || !['touch', 'pen'].includes(event.pointerType)) return;
         const rect = element.getBoundingClientRect();
