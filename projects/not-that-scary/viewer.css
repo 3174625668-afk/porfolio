@@ -1,0 +1,17 @@
+/* Loaded only by Not That Scary. The normal reading layout is unchanged. */
+body[data-project='not-that-scary'] .reading-page img[role='button'] { cursor: zoom-in; }
+body[data-project='not-that-scary'] .reading-page img[role='button']:focus-visible { outline: 1px solid #777; outline-offset: 4px; }
+.scary-viewer { position: fixed; inset: 0; width: 100%; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #fff; color: #111; overflow: hidden; overscroll-behavior: none; }
+.scary-viewer::backdrop { background: #fff; }
+.scary-viewer[open] { display: flex; flex-direction: column; }
+.scary-viewer-tools { display: flex; flex: 0 0 68px; align-items: center; justify-content: flex-end; gap: 8px; padding: 12px 20px; }
+.scary-viewer-tools button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #ddd; border-radius: 0; background: #fff; color: #111; font: 400 24px/1 Arial, sans-serif; cursor: pointer; }
+.scary-viewer-tools button:disabled { color: #aaa; cursor: default; }
+.scary-viewer-tools button:focus-visible { outline: 1px solid #111; outline-offset: 3px; }
+.scary-viewer-stage { position: relative; flex: 1; min-height: 0; overflow: hidden; touch-action: none; overscroll-behavior: none; cursor: zoom-in; }
+.scary-viewer-stage.is-zoomed { cursor: grab; }
+.scary-viewer-stage.is-dragging { cursor: grabbing; }
+.scary-viewer-image { position: absolute; left: 0; top: 0; display: block; max-width: none; max-height: none; margin: 0; transform-origin: 0 0; pointer-events: none; user-select: none; -webkit-user-select: none; }
+@media (max-width: 760px) {
+  .scary-viewer-tools { padding: 8px 12px; flex-basis: 60px; }
+}

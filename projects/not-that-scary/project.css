@@ -1,0 +1,57 @@
+/* Project-only enhancements; shared reading dimensions and spacing stay intact. */
+body[data-project='not-that-scary'] {
+  --scary-star-offset: 36px;
+  --scary-line-offset: 64px;
+  --scary-line-width: 36px;
+}
+body[data-project='not-that-scary'] h1 {
+  animation: scary-title-in 600ms cubic-bezier(.2, .65, .3, 1) both;
+}
+body[data-project='not-that-scary'] .project-header > .star,
+body[data-project='not-that-scary'] .project-header > .line {
+  animation: scary-mark-in 420ms ease-out var(--scary-delay, 160ms) both;
+}
+.scary-title-star-top { top: -32px; left: 36%; width: 9px; height: 9px; --scary-delay: 220ms; }
+.scary-title-star-low { bottom: 18px; left: 65%; width: 7px; height: 7px; --scary-delay: 280ms; }
+.scary-title-line-top { top: -22px; right: 10%; width: 44px; --scary-delay: 200ms; }
+body[data-project='not-that-scary'] .reading-page { position: relative; }
+.scary-page-surface { position: relative; width: 100%; }
+.scary-page-star { width: 10px; height: 10px; }
+.scary-page-line { width: var(--scary-line-width); }
+.scary-page-star.scary-left { left: calc(-1 * var(--scary-star-offset)); }
+.scary-page-star.scary-right { right: calc(-1 * var(--scary-star-offset)); }
+.scary-page-line.scary-left { left: calc(-1 * var(--scary-line-offset)); }
+.scary-page-line.scary-right { right: calc(-1 * var(--scary-line-offset)); }
+.scary-page-star, .scary-page-line { pointer-events: none; }
+@keyframes scary-title-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scary-mark-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (max-width: 1100px) {
+  body[data-project='not-that-scary'] {
+    --scary-star-offset: 28px;
+    --scary-line-offset: 40px;
+    --scary-line-width: 24px;
+  }
+  .scary-page-star { width: 9px; height: 9px; }
+}
+@media (max-width: 760px) {
+  body[data-project='not-that-scary'] {
+    --scary-star-offset: 15px;
+    --scary-line-offset: 18px;
+    --scary-line-width: 12px;
+  }
+  .scary-page-star { width: 7px; height: 7px; }
+  .scary-title-line-top { width: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-project='not-that-scary'] h1,
+  body[data-project='not-that-scary'] .project-header > .star,
+  body[data-project='not-that-scary'] .project-header > .line {
+    animation: none;
+  }
+}

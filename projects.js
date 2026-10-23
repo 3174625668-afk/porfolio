@@ -3,7 +3,7 @@ export const projects = {
   art: [
     { id: 'to-the-last-ounce', displayTitle: 'To the Last Ounce', fullTitle: 'To the Last Ounce', category: 'PERFORMANCE & VIDEO ART' },
     { id: 'nothing-yet-not-nothing', displayTitle: 'Nothing, Yet Not Nothing', fullTitle: 'Nothing, Yet Not Nothing', category: 'PRINTMAKING', href: 'projects/nothing-yet-not-nothing/' },
-    { id: 'not-that-scary', displayTitle: 'Not That Scary', fullTitle: 'Not That Scary', category: 'INSTALLATION ART' },
+    { id: 'not-that-scary', displayTitle: 'Not That Scary', fullTitle: 'Not That Scary', category: 'INSTALLATION ART', href: 'projects/not-that-scary/' },
     { kind: 'group', id: 'other-works', displayTitle: 'Other Works', category: 'SELECTED WORKS' },
     { id: 'printmaking', displayTitle: 'Printmaking', fullTitle: 'Printmaking', category: 'PRINTMAKING / WORKS ON PAPER', href: 'projects/printmaking/' },
     { id: 'the-law', displayTitle: 'The Law', desktopLines: ['The', 'Law'], fullTitle: 'The Law', category: 'BOOK & GRAPHIC DESIGN' },
