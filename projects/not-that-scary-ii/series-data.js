@@ -77,11 +77,14 @@ export const staticLayout = {
     { id: 'd', x: 350, y: 370 },
     { id: 'c', x: 745, y: 325 },
     { id: 'f', x: 0, y: 665 },
-    { id: 'a', x: 450, y: 635 },
+    { id: 'a', x: 535, y: 635 },
   ],
   decorations: [
     { type: 'star', x: 650, y: 610 },
     { type: 'line', x: 70, y: 625 },
-    { type: 'line', x: 760, y: 910 },
+    { type: 'line', x: 850, y: 910 },
+    { type: 'line', x: 825, y: 705 },
+    { type: 'star', x: 885, y: 775 },
+    { type: 'star', x: 360, y: 810 },
   ],
 };
