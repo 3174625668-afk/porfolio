@@ -1,4 +1,4 @@
-import { projects } from './projects.js';
+import { projects } from './projects.js?v=project-route-1';
 import { attachTextDust } from './text-dust.js';
 
 const canvas = document.querySelector('.canvas');
@@ -83,11 +83,15 @@ for (const [key, items] of Object.entries(projects)) {
         revealType(button);
         return;
       }
-      // On touch, the first tap reveals the type; a second tap opens the existing notice.
+      // On touch, keep the first tap for the type; the next opens the project or notice.
       const isTouch = event.detail !== 0 && (pointerType === 'touch' || pointerType === 'pen');
       if (isTouch && activeProject !== button) {
         revealType(button);
-        status.textContent = `${item.displayTitle}: ${item.category}. Tap again for project availability.`;
+        status.textContent = `${item.displayTitle}: ${item.category}. ${item.href ? 'Tap again to open project.' : 'Tap again for project availability.'}`;
+        return;
+      }
+      if (item.href) {
+        window.location.assign(new URL(item.href, document.baseURI).href);
         return;
       }
       notice.querySelector('h2').textContent = item.displayTitle;
