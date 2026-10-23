@@ -8,7 +8,9 @@
 * { box-sizing: border-box; }
 html { background: #fff; color: #111; }
 body { margin: 0; font-family: 'Portfolio Roman', Arial, Helvetica, sans-serif; }
-main { width: min(1120px, calc(100% - 100px)); margin: 0 auto; padding: 74px 0 54px; }
+main { position: relative; width: min(1120px, calc(100% - 100px)); margin: 0 auto; padding: 74px 0 54px; }
+.back-home { position: absolute; top: 22px; left: 0; padding: 8px 0; color: #666; font-size: 10px; line-height: 16px; letter-spacing: 1.3px; text-decoration: none; }
+.back-home:focus-visible { outline: 1px solid #777; outline-offset: 4px; }
 .series-header { position: relative; padding: 0 0 68px; }
 h1 { margin: 0; font-size: clamp(56px, 6.5vw, 104px); line-height: 1.02; letter-spacing: -.055em; font-weight: 900; }
 .star { display: block; width: 13px; height: 13px; background: #111; clip-path: polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%); }
@@ -28,6 +30,7 @@ figcaption { position: absolute; top: calc(100% - 42px + 9px); left: 0; width: 1
 .line { display: block; width: 64px; height: 1px; background: #222; }
 @media (max-width: 760px) {
   main { width: calc(100% - 44px); padding: 40px 0 44px; }
+  .back-home { top: 0; }
   .series-header { padding-bottom: 45px; }
   h1 { font-size: clamp(36px, 8.5vw, 64px); }
   .title-star { top: auto; bottom: 19px; right: 0; width: 10px; height: 10px; }
