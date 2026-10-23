@@ -1,0 +1,17 @@
+/* Only the two essay/review entries opt into these quiet header effects. */
+body[data-reader='research-pages'] h1 { animation: research-title-in 600ms ease-out both; }
+body[data-reader='research-pages'] .project-type { margin: 16px 0 0; color: #666; font-size: 13px; line-height: 1.5; }
+body[data-reader='research-pages'] .project-header > .star,
+body[data-reader='research-pages'] .project-header > .line { animation: research-mark-in 400ms ease-out 160ms both; }
+body[data-reader='research-pages'] .essay-title-star { top: -26px; left: 60%; width: 9px; height: 9px; }
+body[data-reader='research-pages'] .essay-title-line { top: -16px; right: 4%; width: 42px; }
+@keyframes research-title-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes research-mark-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  body[data-reader='research-pages'] h1,
+  body[data-reader='research-pages'] .project-header > .star,
+  body[data-reader='research-pages'] .project-header > .line { animation: none; }
+}

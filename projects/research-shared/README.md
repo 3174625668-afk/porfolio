@@ -1,40 +1,54 @@
-# Research image reading structure
+# Research & Curation image readers
 
-`project-data.js` contains the four confirmed Research & Curation project titles,
-project categories, image directories, page arrays and null introductions.
-Moments in Between now uses twelve artist-uploaded, watermarked WebPs. The other
-three research projects remain empty. Only Moments in Between is linked from the
-homepage; the existing Art Brut and Naïve Art page remains an empty template. The essay's short display title and full formal title stay distinct.
+Only artist-supplied, already-watermarked WebPs are connected. No raw PDFs,
+unmarked exports, fake papers or synthetic demo pages belong in these readers.
 
-| Homepage project id | Future page route | Current state |
-| --- | --- | --- |
-| art-brut-and-naive-art | projects/art-brut-and-naive-art/ | Existing empty portrait template |
-| moments-in-between | projects/moments-in-between/ | 12 approved WebP spreads connected |
-| at-that-time-this-moment | projects/at-that-time-this-moment/ | Data prepared; page not published |
-| printmaking-aesthetic-education | projects/printmaking-aesthetic-education/ | Data prepared; page not published |
+| Project | Page route | Actual image directory | Pages |
+| --- | --- | --- | --- |
+| At That Time, This Moment | projects/at-that-time-this-moment/ | public/images/research/at-that-time-this-moment/pages/ | 01–05 |
+| Art Brut and Naive Art | projects/art-brut-and-naive-art/ | public/images/research/art-brut-and-naive-art/pages/ | 01–14 |
+| Moments in Between | projects/moments-in-between/ | public/images/research/exhibition-proposal/pages/ | 01–12 |
+| The Value of Printmaking in Children's Aesthetic Education | Not yet published | public/images/printmaking-aesthetic-education/pages/ | Empty |
 
-The homepage opens Moments in Between; its other research entries retain the
-existing availability notice. Homepage visuals and hover interactions are unchanged. There are no fake essays, synthetic
-test pages, placeholders, PDF embeds, download links or raw PDF paths in this reader.
+All three prepared project pages are linked from the existing homepage entries;
+there are no duplicate Exhibition Proposal or space-containing project routes.
+Art Brut and Naive Art uses the latest confirmed display spelling. Its previously
+provided longer essay title is retained separately as `paperTitle` in the data,
+without adding extra visible text. Project types are Research Essay and Exhibition
+Review respectively. Introductions remain null; no years have been invented.
 
-The research reader reuses the unchanged shared renderer: 780px maximum width
-for portrait papers, 1160px for the actual 2:1 Moments in Between spreads, natural
-image ratios, ordinary continuous scrolling and lazy loading after the first page. The research-scoped viewer mirrors the existing stable image
-viewer: same original WebP, full-page fit, +/−, wheel/double-click zoom, drag, Esc,
-keyboard access, touch pinch and scroll restoration. No dialog is created for empty
-content. Existing Art Practice and Printmaking files are not modified.
+## Shared stable components
 
-After approval, put only watermarked WebPs in the corresponding public image directory.
-Add entries in reading order:
+`project-data.js` stores titles, types, actual asset directories, verified numeric
+page order and intrinsic image dimensions. Portrait papers use the unchanged shared
+renderer at up to 780px wide; Moments in Between retains its 1160px-wide spread
+reader. All images keep their true ratio. The first image loads eagerly and later
+ones lazily. Original WebPs are never transformed or marked again.
 
-```js
-pages: [
-  { file: '01.webp', width: 1985, height: 2807, alt: 'Artist-approved page description' },
-]
-```
+`image-viewer.js` contains the existing stable research viewer extracted without
+changing its behavior. `viewer.js` continues to initialize it for the Moments reader;
+`essay-viewer.js` initializes it after the new essay/review reader is ready. It opens
+the exact original source and supports full-page fit, +/−, wheel/double-click zoom,
+drag, Escape, focus/keyboard support, touch pinch and restoration of scroll position.
+Only the two essay/review pages load `essay.css`, so their gentle header entrance
+and delayed static star/line appearance cannot affect Moments in Between. Reduced
+motion disables these animations. There is no added image animation or CSS watermark.
 
-Use actual exported pixel sizes from the private conversion manifest, not a guessed
-A4 size. The reader accepts WebPs only; the converter lives at
-`scripts/research-watermark/pdf_to_webp.py`. Projects without approved uploads retain empty page arrays.
-For another research entry later, reuse the existing research HTML structure with its
-own `data-project` id and `data-section="research"`, and include this reader/viewer.
+## Uploading additional pages
+
+Upload only watermarked WebPs to the exact directory in the table. Zero-padded
+numeric filenames (`01.webp`, `02.webp`, …) are recommended. `essay-reader.js`
+initially renders the verified local page list, then discovers each of these two
+projects' public source-directory WebPs and sorts their names numerically. A new
+file is included only after its public image URL is available in Pages; this avoids
+broken images between upload and deployment. PDFs and directories are excluded.
+
+If the public GitHub API is blocked, rate-limited or slow, the reader keeps the
+verified list rather than leaving readers with a blank page. After later uploads,
+refresh the `pages` fallback list and actual pixel dimensions in `project-data.js`
+too, so all new pages remain available even without API access. Directory discovery
+is scoped to these two projects and does not change the Moments reading behavior.
+
+If both the verified data and uploaded directory are empty, the title/navigation
+remain but no placeholder, invented text or empty viewer is displayed. All original
+research input PDFs remain private and outside the public repository.
