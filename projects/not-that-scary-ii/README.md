@@ -1,6 +1,6 @@
 # Not That Scary Ⅱ
 
-This page currently renders one static composition of the eight original thumbnails,
+This page currently renders one static composition of eight small previews using the original full-resolution WebPs,
 with the series title and bilingual artwork names revealed on hover, keyboard focus,
 or keyboard focus. Only one artwork is active at a time; clicking outside or
 pressing Escape dismisses its name. Captions fade over 200ms, with reduced-motion
@@ -14,10 +14,12 @@ Edit titles and retained artwork metadata in `series-data.js`. `staticLayout` co
 the current composition; `viewingOrder` independently controls the full-image reading
 sequence. Historical layout studies are data only and are not rendered.
 
-`thumbnail` is used only for the overview. `fullImage` points to the original uploaded
+`thumbnail` retains the original JPG paths for reference. Both the overview and reading area use `fullImage`, pointing to the original uploaded
 WebP in `public/images/not-that-scary-ii/full/`. Its intrinsic `fullWidth` and
 `fullHeight` are separate from thumbnail geometry and reserve space before loading.
-Full images use native lazy loading; the overview never substitutes for a full image.
+Reading-area images use native lazy loading. The overview retains its authored preview
+boxes and contains the WebPs without cropping or stretching, preserving the composition
+despite small differences between the JPG and WebP aspect ratios.
 
 Below the overview, all eight full images appear in `viewingOrder`, with permanent
 Chinese and English titles and `Etching · dimensions · 2026` captions. Image-to-caption

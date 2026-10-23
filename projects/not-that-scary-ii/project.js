@@ -32,10 +32,13 @@ for (const placement of staticLayout.placements) {
   figure.style.setProperty('--mobile-width', `min(${width / 300 * 100}cqw, ${width / 300 * 360}px)`);
 
   const image = document.createElement('img');
-  image.src = work.thumbnail;
+  image.src = work.fullImage;
   image.alt = `${work.chineseTitle} — ${work.englishTitle}`;
   image.width = work.width;
   image.height = work.height;
+  // Retain the authored preview box; contain the full image without cropping or stretching.
+  image.style.aspectRatio = `${work.width} / ${work.height}`;
+  image.style.objectFit = 'contain';
   image.decoding = 'async';
 
   const trigger = document.createElement('button');
