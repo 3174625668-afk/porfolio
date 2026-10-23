@@ -255,85 +255,55 @@ export const series = {
   },
 };
 
-// Groups below describe editorial placement only, not inferred media or series.
+// Each group is a distinct viewing unit; only Apple is a confirmed series.
+// Layout types describe composition, not titles, media or historical categories.
 export const galleryGroups = [
   {
-    id: 'a', width: 1200, height: 850,
-    placements: [
-      { id: '12', x: 40, y: 35, width: 410 },
-      { id: '13', x: 520, y: 115, width: 385 },
-      { id: '14', x: 105, y: 440, width: 370 },
-      { id: '15', x: 570, y: 470, width: 410 },
-      { id: '16', x: 1000, y: 240, width: 185 },
-    ],
-    decorations: [
-      { type: 'star', x: 950, y: 55, size: 11 },
-      { type: 'line', x: 80, y: 380, size: 62 },
-      { type: 'star', x: 1100, y: 660, size: 8 },
-    ],
+    id: 'g01', layout: 'apple-quartet', align: 'start', maxWidth: 940,
+    artworkIds: ['12', '13', '14', '15'], decorations: [],
   },
   {
-    id: 'b', width: 1200, height: 920,
-    placements: [
-      { id: '21', x: 20, y: 40, width: 455 },
-      { id: '18', x: 620, y: 0, width: 235 },
-      { id: '17', x: 925, y: 125, width: 245 },
-      { id: '10', x: 245, y: 455, width: 245 },
-      { id: '11', x: 625, y: 540, width: 440 },
-    ],
-    decorations: [
-      { type: 'line', x: 470, y: 385, size: 54 },
-      { type: 'star', x: 70, y: 720, size: 10 },
-      { type: 'star', x: 875, y: 450, size: 9 },
-    ],
+    id: 'g02', layout: 'landscape-pair', align: 'end', maxWidth: 1160,
+    artworkIds: ['21', '06'],
+    decorations: [{ type: 'line', x: 65, size: 54 }],
   },
   {
-    id: 'c', width: 1200, height: 840,
-    placements: [
-      { id: '06', x: 30, y: 70, width: 460 },
-      { id: '22', x: 605, y: 0, width: 240 },
-      { id: '08', x: 945, y: 245, width: 245 },
-      { id: '19', x: 180, y: 450, width: 325 },
-    ],
-    decorations: [
-      { type: 'line', x: 870, y: 135, size: 50 },
-      { type: 'star', x: 550, y: 590, size: 10 },
-      { type: 'line', x: 945, y: 685, size: 40 },
-    ],
+    id: 'g03', layout: 'lead-and-pair', align: 'start', maxWidth: 1200,
+    artworkIds: ['01', '02', '03'],
+    decorations: [{ type: 'star', x: 8, size: 10 }],
   },
   {
-    id: 'd', width: 1200, height: 875,
-    placements: [
-      { id: '01', x: 15, y: 50, width: 550 },
-      { id: '02', x: 665, y: 20, width: 220 },
-      { id: '03', x: 945, y: 340, width: 235 },
-      { id: '04', x: 90, y: 540, width: 350 },
-      { id: '05', x: 495, y: 485, width: 350 },
-    ],
-    decorations: [
-      { type: 'star', x: 600, y: 200, size: 11 },
-      { type: 'line', x: 905, y: 110, size: 42 },
-      { type: 'line', x: 70, y: 480, size: 50 },
-      { type: 'star', x: 900, y: 760, size: 8 },
-    ],
+    id: 'g04', layout: 'portrait-triptych', align: 'end', maxWidth: 900,
+    artworkIds: ['16', '17', '18'], decorations: [],
   },
   {
-    id: 'e', width: 1200, height: 650,
-    placements: [
-      { id: '20', x: 50, y: 100, width: 280 },
-      { id: '07', x: 500, y: 25, width: 270 },
-      { id: '09', x: 895, y: 250, width: 265 },
-    ],
-    decorations: [
-      { type: 'line', x: 385, y: 250, size: 50 },
-      { type: 'star', x: 820, y: 120, size: 11 },
-    ],
+    id: 'g05', layout: 'mixed-dialogue', align: 'start', maxWidth: 900,
+    artworkIds: ['10', '11'],
+    decorations: [{ type: 'line', x: 62, size: 44 }],
+  },
+  {
+    id: 'g06', layout: 'stacked-pair', align: 'end', maxWidth: 520,
+    artworkIds: ['04', '05'], decorations: [],
+  },
+  {
+    id: 'g07', layout: 'portrait-dialogue', align: 'start', maxWidth: 680,
+    artworkIds: ['22', '20'],
+    decorations: [{ type: 'star', x: 42, size: 9 }],
+  },
+  {
+    id: 'g08', layout: 'ink-trio', align: 'end', maxWidth: 1000,
+    artworkIds: ['07', '08', '09'], decorations: [],
+  },
+  {
+    id: 'g09', layout: 'solo', align: 'center', maxWidth: 520,
+    artworkIds: ['19'],
+    decorations: [{ type: 'line', x: 48, size: 48 }],
   },
 ];
 
-export const galleryOrder = galleryGroups.flatMap(group => group.placements.map(item => item.id));
+export const galleryOrder = galleryGroups.flatMap(group => group.artworkIds);
 export const artworkRecords = artworks.map(artwork => ({
   ...artwork,
   displayOrder: galleryOrder.indexOf(artwork.id),
-  groupId: galleryGroups.find(group => group.placements.some(item => item.id === artwork.id)).id,
+  groupId: galleryGroups.find(group => group.artworkIds.includes(artwork.id)).id,
 }));

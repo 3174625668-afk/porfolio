@@ -1,41 +1,38 @@
-# Printmaking — stage one
+# Printmaking — static clustered edition
 
-A static, authored gallery of all 22 original WebPs. No hover scaling, captions,
-lightbox, entrance effects, scroll animation, media classification or invented text.
+22 original WebPs form nine distinct viewing units. There are no hover effects,
+image links, lightboxes, captions, group labels or animations.
 
-## Source assets
+## Editorial structure
 
-Actual filenames are `public/images/printmaking/artworks/1.webp` through `22.webp`.
-The files are read unchanged. The six teacher-designed reference spreads inform
-composition only; the gallery never requests or embeds them.
+1. 12–15: Apple alone, compact two-by-two quartet, with no other artwork inserted.
+2. 21 / 06: warm colour and grey horizontal compositions, side by side.
+3. 01 / 02 / 03: one broad lead image and two smaller upright companions.
+4. 16 / 17 / 18: an upright triptych, returning to colour after the black/white group.
+5. 10 / 11: an upright and a horizontal painted surface in a close dialogue.
+6. 04 / 05: two horizontal works stacked as a compact, right-aligned unit.
+7. 22 / 20: two upright grey compositions sharing a baseline and height.
+8. 07 / 08 / 09: three bold black/white forms arranged around their different silhouettes.
+9. 19: a larger independent circular composition, centered at the close.
 
-The spread `纯艺（20页）_19.jpg` explicitly labels the four images corresponding to
-12–15 as Apple. Their series name is stored once in `series.apple`, and they remain
-contiguous in both desktop placement and mobile reading order. Individual titles
-remain null. All other titles, physical dimensions, media, years and series are null.
-Pixel width/height are measured file geometry, not physical artwork dimensions.
+These are visual relationships, not newly asserted media or formal series. Apple
+remains the only confirmed series: the teacher's `纯艺（20页）_19.jpg` explicitly labels
+12–15 together. All other series, artwork titles, physical dimensions, media and
+years remain exactly as previously stored (null). Pixel sizes only describe files.
 
-## Editable data
+## Layout and data
 
-`gallery-data.js` contains:
+`gallery-data.js` preserves the original asset/series records. `galleryGroups` now
+stores group membership, a layout type, alignment, maximum width and sparse marks.
+`galleryOrder` and each record's `groupId`/zero-based `displayOrder` derive from that
+editorial sequence. Reference spreads inform composition but are never embedded.
 
-- `artworks`: IDs, exact source paths, measured pixel geometry and nullable metadata.
-- `series`: confirmed series records with source evidence; no guessed memberships.
-- `galleryGroups`: authored positions and widths on 1200-unit fields, plus sparse
-  static stars/lines. These groups describe composition, not artwork classification.
-- `galleryOrder`: editorial reading order, independent of source filenames.
-- `artworkRecords`: records with zero-based `displayOrder` and `groupId` added.
+Group interiors use 18–26px gaps on desktop; separate units have 110–160px of space.
+On mobile, internal gaps reduce to 12–14px and units retain 76px separation. Layouts
+adapt individually: the Apple quartet remains together, the lead image sits above
+its companions, and portrait/ink groups keep their internal hierarchy. No cards,
+frames, background panels or standardized image boxes are introduced. All images
+use their own complete natural ratio, with intrinsic dimensions and lazy loading.
 
-The first arrangement moves from the red/blue quartet through related dark colour,
-warm red, pale colour and muted painted surfaces into soft grey and denser black
-textures. Reference relationships are echoed without copying portfolio-page layouts.
-
-Desktop placement is fixed by the authored coordinates. At 800px and below, each
-field becomes a natural single-column flow in the same editorial order. Images
-always retain their intrinsic ratio; no fixed image frames, cropping, overlap,
-borders, shadows, transforms or animations are used. Only the first image is eager;
-remaining images use native lazy loading with intrinsic dimensions reserved.
-
-The homepage changes only the existing Printmaking entry's destination and cache
-versions. Other project pages and all original assets remain unchanged. Stage two
-interactions are intentionally not implemented until the artist approves this layout.
+This revision changes only Printmaking files. The homepage destination was already
+connected and is not modified, and all other project pages and originals stay intact.
