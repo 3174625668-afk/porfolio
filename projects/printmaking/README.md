@@ -1,7 +1,8 @@
 # Printmaking — static clustered edition
 
 22 original WebPs form nine distinct viewing units. Images remain static.
-Hover, keyboard focus or touch reveals a single caption; no lightbox is added.
+Hover, keyboard focus or touch reveals one caption for the 18 standalone images.
+Apple has one permanent shared series label; no lightbox is added.
 
 ## Editorial structure
 
@@ -50,9 +51,12 @@ regenerate rather than editing the generated HTML directly.
 
 `captions.js` opens one label on pointer hover, focus or touch and closes it on
 leaving, blur, Escape or an outside tap. All names and media/year lines are rendered
-from the data at build time; Apple uses its shared series name. Overlay labels
+from the data at build time. Apple images have no individual hover controls or
+captions. Its shared series label sits to the right of the quartet on wide screens,
+and immediately below it, aligned right, when there is no lateral space. Overlay labels
 prefer the 8px space beneath an image. When tight rows make this impossible,
 they use nearby clear space above/beside the image or at the group's edge.
-Collision checks include images, decorations, title and navigation. No image,
+Collision checks include images, decorations, title, navigation and the shared
+series label. No image,
 cluster or page dimension changes. Reduced motion disables label transitions.
 The build inlines the small caption script too, avoiding cached script versions.

@@ -75,6 +75,22 @@ h1 { margin: 0; font-size: clamp(68px, 9vw, 144px); line-height: .98; font-weigh
 @media (prefers-reduced-motion: reduce) {
   .artwork-caption { transition: none; transform: none; }
 }
+
+/* Apple is one series: one permanent label, never four hover labels. */
+.series-info {
+  position: absolute; top: 42%; left: calc(100% + 24px);
+  width: clamp(100px, calc(100vw - 1120px), 240px);
+}
+.series-info h2 { margin: 0; font-size: clamp(36px, 4vw, 60px); line-height: 1.05; font-weight: 700; letter-spacing: -.04em; }
+.series-info p { margin: 10px 0 0; color: #707070; font-size: 12px; line-height: 1.4; }
+@media (max-width: 1199px) {
+  .series-info {
+    top: calc(100% + 8px); left: auto; right: 0; width: max-content;
+    max-width: 100%; display: flex; align-items: center; gap: 16px;
+  }
+  .series-info h2 { font-size: 24px; line-height: 1.1; }
+  .series-info p { margin: 0; }
+}
   </style>
 </head>
 <body>
@@ -89,10 +105,11 @@ h1 { margin: 0; font-size: clamp(68px, 9vw, 144px); line-height: .98; font-weigh
     </header>
     <section id="gallery" aria-label="Printmaking artworks">
     <div class="gallery-cluster layout-apple-quartet align-start" data-layout-group="g01" style="--cluster-width:940px;--ratio-columns:1.3567727609178386fr 1.3819628647214854fr 1.4320528707145808fr 1.3420752565564424fr">
-      <figure class="artwork" data-artwork-id="12" tabindex="0" role="button" aria-label="Apple" aria-expanded="false" aria-controls="caption-12"><img src="../../public/images/printmaking/artworks/12.webp" alt="Apple" width="3666" height="2702" loading="eager" decoding="async"><figcaption class="artwork-caption" id="caption-12"><span class="caption-title">Apple</span><span class="caption-details">Monoprint · 2024</span></figcaption></figure>
-      <figure class="artwork" data-artwork-id="13" tabindex="0" role="button" aria-label="Apple" aria-expanded="false" aria-controls="caption-13"><img src="../../public/images/printmaking/artworks/13.webp" alt="Apple" width="3647" height="2639" loading="lazy" decoding="async"><figcaption class="artwork-caption" id="caption-13"><span class="caption-title">Apple</span><span class="caption-details">Monoprint · 2024</span></figcaption></figure>
-      <figure class="artwork" data-artwork-id="14" tabindex="0" role="button" aria-label="Apple" aria-expanded="false" aria-controls="caption-14"><img src="../../public/images/printmaking/artworks/14.webp" alt="Apple" width="3467" height="2421" loading="lazy" decoding="async"><figcaption class="artwork-caption" id="caption-14"><span class="caption-title">Apple</span><span class="caption-details">Monoprint · 2024</span></figcaption></figure>
-      <figure class="artwork" data-artwork-id="15" tabindex="0" role="button" aria-label="Apple" aria-expanded="false" aria-controls="caption-15"><img src="../../public/images/printmaking/artworks/15.webp" alt="Apple" width="3531" height="2631" loading="lazy" decoding="async"><figcaption class="artwork-caption" id="caption-15"><span class="caption-title">Apple</span><span class="caption-details">Monoprint · 2024</span></figcaption></figure>
+      <figure class="artwork" data-artwork-id="12" aria-describedby="apple-series-info"><img src="../../public/images/printmaking/artworks/12.webp" alt="Apple" width="3666" height="2702" loading="eager" decoding="async"></figure>
+      <figure class="artwork" data-artwork-id="13" aria-describedby="apple-series-info"><img src="../../public/images/printmaking/artworks/13.webp" alt="Apple" width="3647" height="2639" loading="lazy" decoding="async"></figure>
+      <figure class="artwork" data-artwork-id="14" aria-describedby="apple-series-info"><img src="../../public/images/printmaking/artworks/14.webp" alt="Apple" width="3467" height="2421" loading="lazy" decoding="async"></figure>
+      <figure class="artwork" data-artwork-id="15" aria-describedby="apple-series-info"><img src="../../public/images/printmaking/artworks/15.webp" alt="Apple" width="3531" height="2631" loading="lazy" decoding="async"></figure>
+<div class="series-info" id="apple-series-info"><h2>Apple</h2><p>Monoprint · 2024</p></div>
     </div>
     <div class="gallery-cluster layout-landscape-pair align-end" data-layout-group="g02" style="--cluster-width:1160px;--ratio-columns:1.434733257661748fr 1.53381777529346fr">
       <figure class="artwork" data-artwork-id="21" tabindex="0" role="button" aria-label="滚滚向前 / Rolling Onward" aria-expanded="false" aria-controls="caption-21"><img src="../../public/images/printmaking/artworks/21.webp" alt="滚滚向前" width="2528" height="1762" loading="lazy" decoding="async"><figcaption class="artwork-caption" id="caption-21"><span class="caption-title" lang="zh">滚滚向前</span><span class="caption-english">Rolling Onward</span><span class="caption-details">Colour Etching · 2025</span></figcaption></figure>
@@ -140,7 +157,7 @@ h1 { margin: 0; font-size: clamp(68px, 9vw, 144px); line-height: .98; font-weigh
   'use strict';
   // Only the label moves; original artwork geometry is never changed.
   const gallery = document.querySelector('#gallery');
-  const works = [...gallery.querySelectorAll('.artwork')];
+  const works = [...gallery.querySelectorAll('.artwork')].filter(work => work.querySelector('.artwork-caption'));
   let active = null;
   let keyboardNavigation = false;
   const rect = element => element.getBoundingClientRect();
@@ -154,7 +171,7 @@ h1 { margin: 0; font-size: clamp(68px, 9vw, 144px); line-height: .98; font-weigh
     label.style.width = 'max-content';
     label.style.maxWidth = `${Math.min(280, area.width)}px`;
     const size = rect(label);
-    const blockers = [...document.querySelectorAll('.artwork img, .star, .line, h1, .back-home')].map(rect);
+    const blockers = [...document.querySelectorAll('.artwork img, .star, .line, h1, .back-home, .series-info')].map(rect);
     const clampX = x => Math.min(Math.max(x, area.left), area.right - size.width);
     const candidates = [];
     const add = (left, top) => candidates.push({left: clampX(left), top});
@@ -223,12 +240,13 @@ h1 { margin: 0; font-size: clamp(68px, 9vw, 144px); line-height: .98; font-weigh
       if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(work); }
     });
   }
+  gallery.querySelector('.layout-apple-quartet').addEventListener('pointerenter', () => close(true));
   document.addEventListener('keydown', event => {
     keyboardNavigation = true;
     if (event.key === 'Escape') close();
   }, true);
   document.addEventListener('pointermove', () => { keyboardNavigation = false; });
-  document.addEventListener('pointerdown', event => { if (!event.target.closest('.artwork')) close(); });
+  document.addEventListener('pointerdown', event => { if (!event.target.closest('.artwork-caption') && !works.includes(event.target.closest('.artwork'))) close(); });
   window.addEventListener('resize', () => { if (active) positionLabel(active); });
   // Lazy images retain intrinsic sizes; remeasure if fonts or resource sizing changes.
   for (const image of gallery.querySelectorAll('img')) image.addEventListener('load', () => { if (active) positionLabel(active); });

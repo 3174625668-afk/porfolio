@@ -2,7 +2,7 @@
   'use strict';
   // Only the label moves; original artwork geometry is never changed.
   const gallery = document.querySelector('#gallery');
-  const works = [...gallery.querySelectorAll('.artwork')];
+  const works = [...gallery.querySelectorAll('.artwork')].filter(work => work.querySelector('.artwork-caption'));
   let active = null;
   let keyboardNavigation = false;
   const rect = element => element.getBoundingClientRect();
@@ -16,7 +16,7 @@
     label.style.width = 'max-content';
     label.style.maxWidth = `${Math.min(280, area.width)}px`;
     const size = rect(label);
-    const blockers = [...document.querySelectorAll('.artwork img, .star, .line, h1, .back-home')].map(rect);
+    const blockers = [...document.querySelectorAll('.artwork img, .star, .line, h1, .back-home, .series-info')].map(rect);
     const clampX = x => Math.min(Math.max(x, area.left), area.right - size.width);
     const candidates = [];
     const add = (left, top) => candidates.push({left: clampX(left), top});
@@ -85,12 +85,13 @@
       if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(work); }
     });
   }
+  gallery.querySelector('.layout-apple-quartet').addEventListener('pointerenter', () => close(true));
   document.addEventListener('keydown', event => {
     keyboardNavigation = true;
     if (event.key === 'Escape') close();
   }, true);
   document.addEventListener('pointermove', () => { keyboardNavigation = false; });
-  document.addEventListener('pointerdown', event => { if (!event.target.closest('.artwork')) close(); });
+  document.addEventListener('pointerdown', event => { if (!event.target.closest('.artwork-caption') && !works.includes(event.target.closest('.artwork'))) close(); });
   window.addEventListener('resize', () => { if (active) positionLabel(active); });
   // Lazy images retain intrinsic sizes; remeasure if fonts or resource sizing changes.
   for (const image of gallery.querySelectorAll('img')) image.addEventListener('load', () => { if (active) positionLabel(active); });
