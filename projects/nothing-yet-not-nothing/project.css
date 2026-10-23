@@ -1,0 +1,57 @@
+/* Project-only enhancements; shared reading dimensions and spacing stay intact. */
+body[data-project='nothing-yet-not-nothing'] {
+  --nothing-star-offset: 36px;
+  --nothing-line-offset: 64px;
+  --nothing-line-width: 36px;
+}
+body[data-project='nothing-yet-not-nothing'] h1 {
+  animation: nothing-title-in 600ms cubic-bezier(.2, .65, .3, 1) both;
+}
+body[data-project='nothing-yet-not-nothing'] .project-header > .star,
+body[data-project='nothing-yet-not-nothing'] .project-header > .line {
+  animation: nothing-mark-in 420ms ease-out var(--nothing-delay, 160ms) both;
+}
+.nothing-title-star-top { top: -32px; left: 36%; width: 9px; height: 9px; --nothing-delay: 220ms; }
+.nothing-title-star-low { bottom: 18px; left: 65%; width: 7px; height: 7px; --nothing-delay: 280ms; }
+.nothing-title-line-top { top: -22px; right: 10%; width: 44px; --nothing-delay: 200ms; }
+body[data-project='nothing-yet-not-nothing'] .reading-page { position: relative; }
+.nothing-page-surface { position: relative; width: 100%; }
+.nothing-page-star { width: 10px; height: 10px; }
+.nothing-page-line { width: var(--nothing-line-width); }
+.nothing-page-star.nothing-left { left: calc(-1 * var(--nothing-star-offset)); }
+.nothing-page-star.nothing-right { right: calc(-1 * var(--nothing-star-offset)); }
+.nothing-page-line.nothing-left { left: calc(-1 * var(--nothing-line-offset)); }
+.nothing-page-line.nothing-right { right: calc(-1 * var(--nothing-line-offset)); }
+.nothing-page-star, .nothing-page-line { pointer-events: none; }
+@keyframes nothing-title-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes nothing-mark-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (max-width: 1100px) {
+  body[data-project='nothing-yet-not-nothing'] {
+    --nothing-star-offset: 28px;
+    --nothing-line-offset: 40px;
+    --nothing-line-width: 24px;
+  }
+  .nothing-page-star { width: 9px; height: 9px; }
+}
+@media (max-width: 760px) {
+  body[data-project='nothing-yet-not-nothing'] {
+    --nothing-star-offset: 15px;
+    --nothing-line-offset: 18px;
+    --nothing-line-width: 12px;
+  }
+  .nothing-page-star { width: 7px; height: 7px; }
+  .nothing-title-line-top { width: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-project='nothing-yet-not-nothing'] h1,
+  body[data-project='nothing-yet-not-nothing'] .project-header > .star,
+  body[data-project='nothing-yet-not-nothing'] .project-header > .line {
+    animation: none;
+  }
+}

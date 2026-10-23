@@ -1,4 +1,4 @@
-import { projects } from './projects.js?v=project-route-1';
+import { projects } from './projects.js?v=nothing-route-1';
 import { attachTextDust } from './text-dust.js';
 
 const canvas = document.querySelector('.canvas');
