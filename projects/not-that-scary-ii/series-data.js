@@ -86,5 +86,9 @@ export const staticLayout = {
     { type: 'line', x: 550, y: 680 },
     { type: 'star', x: 945, y: 820 },
     { type: 'star', x: 490, y: 850 },
+    { type: 'star', x: 320, y: 120, size: 10 },
+    { type: 'line', x: 610, y: 185, size: 40 },
+    { type: 'star', x: 675, y: 355, size: 11 },
+    { type: 'line', x: 285, y: 345, size: 36 },
   ],
 };

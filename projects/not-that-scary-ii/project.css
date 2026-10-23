@@ -13,10 +13,15 @@ main { width: min(1120px, calc(100% - 100px)); margin: 0 auto; padding: 74px 0 5
 h1 { margin: 0; font-size: clamp(56px, 6.5vw, 104px); line-height: 1.02; letter-spacing: -.055em; font-weight: 900; }
 .star { display: block; width: 13px; height: 13px; background: #111; clip-path: polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%); }
 .title-star { position: absolute; right: 15px; top: 14px; width: 18px; height: 18px; }
+.title-line { position: absolute; bottom: 30px; left: 0; width: 68px; }
+.title-star-small { position: absolute; bottom: 25px; left: 58%; width: 10px; height: 10px; }
 .overview { position: relative; width: 100%; aspect-ratio: 1000 / 1090; }
-.artwork { position: absolute; margin: 0; }
+.artwork { position: absolute; margin: 0; padding-bottom: 42px; }
+.artwork-trigger { display: block; width: 100%; margin: 0; padding: 0; border: 0; border-radius: 0; background: none; color: inherit; cursor: pointer; }
+.artwork-trigger:focus-visible { outline: 1px solid #777; outline-offset: 4px; }
 .artwork img { display: block; width: 100%; height: auto; }
-figcaption { margin-top: 7px; }
+figcaption { position: absolute; top: calc(100% - 42px + 9px); left: 0; width: 100%; margin: 0; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 200ms ease, visibility 0s linear 200ms; }
+.artwork.is-active figcaption { opacity: 1; visibility: visible; transition-delay: 0s; }
 .caption-chinese { display: block; font-size: 13px; font-weight: 400; line-height: 19px; letter-spacing: .025em; }
 .caption-english { display: block; color: #777; font-size: 11px; line-height: 16px; }
 .decoration { position: absolute; pointer-events: none; }
@@ -26,7 +31,10 @@ figcaption { margin-top: 7px; }
   .series-header { padding-bottom: 45px; }
   h1 { font-size: clamp(36px, 8.5vw, 64px); }
   .title-star { top: auto; bottom: 19px; right: 0; width: 10px; height: 10px; }
+  .title-line { bottom: 22px; width: 44px; }
+  .title-star-small { bottom: 18px; width: 8px; height: 8px; }
   .overview { aspect-ratio: auto; display: flex; flex-direction: column; align-items: center; gap: 36px; container-type: inline-size; }
   .artwork { position: relative; left: auto !important; top: auto !important; width: var(--mobile-width) !important; }
   .decoration { display: none; }
 }
+@media (prefers-reduced-motion: reduce) { figcaption { transition: none; } }
