@@ -1,0 +1,25 @@
+body[data-project='the-law'] h1 { animation: law-title-in 600ms ease-out both; }
+body[data-project='the-law'] .title-star { top: -26px; left: 48%; width: 9px; height: 9px; }
+body[data-project='the-law'] .title-line { top: -16px; right: 4%; width: 42px; }
+.book-section + .book-section { margin-top: 84px; }
+.book-section h2 { margin: 0 0 24px; font-size: 15px; line-height: 1.4; font-weight: 500; }
+.units { display: flex; flex-direction: column; align-items: center; gap: 48px; }
+.reading-unit { width: 100%; margin: 0; }
+#interior .single-page { max-width: 900px; }
+#poster .reading-unit { max-width: 660px; }
+#invitation .reading-unit { max-width: 873px; }
+.unit-trigger { display: block; width: 100%; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; cursor: zoom-in; color: inherit; }
+.unit-trigger:focus-visible { outline: 1px solid #777; outline-offset: 4px; }
+.unit-images { display: flex; align-items: flex-start; width: 100%; gap: 0; direction: ltr; }
+.unit-images img { display: block; flex: none; height: auto; margin: 0; padding: 0; border: 0; }
+@keyframes law-title-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 760px) {
+  .book-section + .book-section { margin-top: 54px; }
+  .book-section h2 { margin-bottom: 18px; }
+  .units { gap: 28px; }
+  /* A spread is always one horizontal unit, including on narrow screens. */
+  .unit-images { flex-wrap: nowrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-project='the-law'] h1 { animation: none; }
+}

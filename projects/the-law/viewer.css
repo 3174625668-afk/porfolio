@@ -1,0 +1,19 @@
+/* Loaded only by The Law. The normal reading layout is unchanged. */
+body[data-project='the-law'] .unit-trigger { cursor: zoom-in; }
+body[data-project='the-law'] .unit-trigger:focus-visible { outline: 1px solid #777; outline-offset: 4px; }
+.law-viewer { position: fixed; inset: 0; width: 100%; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: #fff; color: #111; overflow: hidden; overscroll-behavior: none; }
+.law-viewer::backdrop { background: #fff; }
+.law-viewer[open] { display: flex; flex-direction: column; }
+.law-viewer-tools { display: flex; flex: 0 0 68px; align-items: center; justify-content: flex-end; gap: 8px; padding: 12px 20px; }
+.law-viewer-tools button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #ddd; border-radius: 0; background: #fff; color: #111; font: 400 24px/1 Arial, sans-serif; cursor: pointer; }
+.law-viewer-tools button:disabled { color: #aaa; cursor: default; }
+.law-viewer-tools button:focus-visible { outline: 1px solid #111; outline-offset: 3px; }
+.law-viewer-stage { position: relative; flex: 1; min-height: 0; overflow: hidden; touch-action: none; overscroll-behavior: none; cursor: zoom-in; }
+.law-viewer-stage.is-zoomed { cursor: grab; }
+.law-viewer-stage.is-dragging { cursor: grabbing; }
+.law-viewer-surface { position: absolute; left: 0; top: 0; display: flex; gap: 0; flex-wrap: nowrap; direction: ltr; max-width: none; max-height: none; margin: 0; transform-origin: 0 0; pointer-events: none; user-select: none; -webkit-user-select: none; }
+@media (max-width: 760px) {
+  .law-viewer-tools { padding: 8px 12px; flex-basis: 60px; }
+}
+
+.law-viewer-surface img { display: block; flex: none; height: 100%; max-width: none; margin: 0; padding: 0; border: 0; pointer-events: none; user-select: none; }

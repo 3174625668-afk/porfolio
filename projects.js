@@ -6,7 +6,7 @@ export const projects = {
     { id: 'not-that-scary', displayTitle: 'Not That Scary', fullTitle: 'Not That Scary', category: 'INSTALLATION ART', href: 'projects/not-that-scary/' },
     { kind: 'group', id: 'other-works', displayTitle: 'Other Works', category: 'SELECTED WORKS' },
     { id: 'printmaking', displayTitle: 'Printmaking', fullTitle: 'Printmaking', category: 'PRINTMAKING / WORKS ON PAPER', href: 'projects/printmaking/' },
-    { id: 'the-law', displayTitle: 'The Law', desktopLines: ['The', 'Law'], fullTitle: 'The Law', category: 'BOOK & GRAPHIC DESIGN' },
+    { id: 'the-law', displayTitle: 'The Law', desktopLines: ['The', 'Law'], fullTitle: 'The Law', category: 'BOOK & GRAPHIC DESIGN', href: 'projects/the-law/' },
     { id: 'not-that-scary-ii', displayTitle: 'Not That Scary Ⅱ', desktopLines: ['Not That', 'Scary', 'Ⅱ'], fullTitle: 'Not That Scary Ⅱ', originalTitle: '我希望他不那么吓人', category: 'PRINTMAKING', href: 'projects/not-that-scary-ii/' },
   ],
   research: [
