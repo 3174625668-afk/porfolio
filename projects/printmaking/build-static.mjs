@@ -29,7 +29,7 @@ const groups = galleryGroups.map(group => {
   });
   const marks = group.decorations.map(mark => `      <span class="cluster-decoration ${mark.type}" aria-hidden="true" style="left:${mark.x}%;width:${mark.size}px;${mark.type === 'star' ? `height:${mark.size}px;` : ''}"></span>`);
   const seriesInfo = group.layout === 'apple-quartet'
-    ? `<div class="series-info" id="apple-series-info"><h2>${escape(series.apple.name)}</h2><p>${escape(series.apple.medium)} · ${escape(series.apple.year)}</p></div>`
+    ? `<div class="series-info" id="apple-series-info" data-apple-label="centered-caption"><span class="caption-title">${escape(series.apple.name)}</span><span class="caption-details">${escape(series.apple.medium)} · ${escape(series.apple.year)}</span></div>`
     : '';
   return `    <div class="gallery-cluster layout-${group.layout} align-${group.align}" data-layout-group="${group.id}" style="--cluster-width:${group.maxWidth}px;--ratio-columns:${columns}">\n${[...works, ...marks, seriesInfo].filter(Boolean).join('\n')}\n    </div>`;
 }).join('\n');

@@ -52,7 +52,8 @@ regenerate rather than editing the generated HTML directly.
 `captions.js` opens one label on pointer hover, focus or touch and closes it on
 leaving, blur, Escape or an outside tap. All names and media/year lines are rendered
 from the data at build time. Apple images have no individual hover controls or
-captions. Its shared series label sits to the right of the quartet on wide screens,
+captions. Its shared series label uses the same 16px caption typography, centered
+horizontally in the right-hand whitespace and vertically against the quartet,
 and immediately below it, aligned right, when there is no lateral space. Overlay labels
 prefer the 8px space beneath an image. When tight rows make this impossible,
 they use nearby clear space above/beside the image or at the group's edge.
