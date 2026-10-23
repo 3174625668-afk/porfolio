@@ -1,0 +1,16 @@
+/* Static marks in the outer whitespace; no reading dimensions are changed. */
+body[data-section='research'] {
+  --research-mark-gap: clamp(6px, calc((100vw - 1160px) / 4), 28px);
+  --research-line-width: clamp(12px, calc((100vw - 1160px) / 8), 36px);
+  --research-star-size: clamp(7px, .6vw, 10px);
+}
+body[data-section='research'] .reading-page { position: relative; }
+body[data-section='research'] .research-page-mark { pointer-events: none; }
+body[data-section='research'] .research-page-mark.star { width: var(--research-star-size); height: var(--research-star-size); }
+body[data-section='research'] .research-page-mark.line { width: var(--research-line-width); background: #444; }
+body[data-section='research'] .research-page-mark.star.mark-left { left: calc(-1 * (var(--research-mark-gap) + var(--research-star-size))); }
+body[data-section='research'] .research-page-mark.star.mark-right { right: calc(-1 * (var(--research-mark-gap) + var(--research-star-size))); }
+body[data-section='research'] .research-page-mark.line.mark-left { left: calc(-1 * (var(--research-mark-gap) + var(--research-line-width))); }
+body[data-section='research'] .research-page-mark.line.mark-right { right: calc(-1 * (var(--research-mark-gap) + var(--research-line-width))); }
+body[data-section='research'] .research-header-star { top: -30px; left: 14%; width: 7px; height: 7px; pointer-events: none; }
+body[data-section='research'] .research-header-line { bottom: 23px; left: 58%; width: 38px; pointer-events: none; }

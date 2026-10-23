@@ -56,3 +56,13 @@ research input PDFs remain private and outside the public repository.
 The two-page Chinese journal article uses its own small reader entry and the
 shared portrait renderer/viewer. Its type is Published Journal Article. No abstract,
 translation, journal name, year or other unconfirmed publication data is added.
+
+## Static whitespace ornaments
+
+All four research entry pages load `ornaments.css` / `ornaments.js`. Two small
+header marks and a sparse alternating pattern along page margins reuse the existing
+four-point star and one-pixel line. Marks remain outside the image rectangles and
+are never baked into or placed over a work. Responsive offsets fit even narrow
+phone margins. The enhancement adds no page height, reading gap, image transform,
+animation or pointer target. A direct-child observer decorates any page nodes
+replaced after optional source-directory discovery, without duplicating marks.

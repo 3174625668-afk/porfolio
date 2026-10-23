@@ -1,4 +1,4 @@
-import { projects } from './projects.js?v=journal-route-1';
+import { projects } from './projects.js?v=ounce-research-marks-1';
 import { attachTextDust } from './text-dust.js';
 
 const canvas = document.querySelector('.canvas');
