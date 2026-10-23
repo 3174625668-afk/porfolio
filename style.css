@@ -107,7 +107,7 @@ dialog h2 { font-size: 32px; line-height: 1.1; }
   .left .type-target:nth-child(3), .left .group-label { width: 27cqw; }
   .left .type-target:nth-child(5) { width: 23.75cqw; }
   .left .type-target:nth-child(6), .left .type-target:nth-child(7) { width: 16cqw; }
-  .right .entries { align-items: flex-end; gap: .65cqw; }
+  .right .entries { align-items: flex-end; gap: clamp(.65cqw, 5svh, 2.8cqw); }
   .right .type-target:last-child { width: 20.95cqw; }
 }
 /* A prepainted texture fades/transforms as one layer; no per-frame canvas painting. */
@@ -155,13 +155,8 @@ html { overflow-x: clip; }
   .title-line { display: block; white-space: nowrap; }
 }
 @media (min-width: 901px) {
-  /* With no outside gutters, let the long article clear the desk's tapered edge. */
-  .right .type-target:last-child { margin-top: max(0px, calc(7cqw - (100vw - 100cqw) / 2)); }
-}
-
-@media (min-width: 901px) {
   .right .type-target:last-child strong {
-    line-height: .95;
+    line-height: .9;
     letter-spacing: clamp(-.125cqw, calc(-.125cqw + (100vw - 100cqw) / 160), -.025cqw);
   }
   .right .type-target:last-child strong::first-line { letter-spacing: -.2cqw; }
