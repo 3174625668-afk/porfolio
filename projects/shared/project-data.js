@@ -10,7 +10,11 @@ export const projectDetails = {
     template: 'landscape',
     introduction: null,
     imageDirectory: 'public/images/to-the-last-ounce/pages/',
-    pages: [],
+    pages: [
+      { file: '纯艺（20页）_06.jpg', alt: 'To the Last Ounce — portfolio page 06', width: 4400, height: 2200 },
+      { file: '纯艺（20页）_07.jpg', alt: 'To the Last Ounce — portfolio page 07', width: 4400, height: 2200 },
+      { file: '纯艺（20页）_08.jpg', alt: 'To the Last Ounce — portfolio page 08', width: 4400, height: 2200 },
+    ],
   },
   'art-brut-and-naive-art': {
     displayTitle: 'Art Brut and Naïve Art',

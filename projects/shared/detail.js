@@ -1,4 +1,4 @@
-import { projectDetails } from './project-data.js?v=templates-1';
+import { projectDetails } from './project-data.js?v=ounce-pages-1';
 
 const siteRoot = new URL('../../', import.meta.url);
 
