@@ -13,7 +13,7 @@ main { width: min(1120px, calc(100% - 100px)); margin: 0 auto; padding: 74px 0 5
 h1 { margin: 0; font-size: clamp(56px, 6.5vw, 104px); line-height: 1.02; letter-spacing: -.055em; font-weight: 900; }
 .star { display: block; width: 13px; height: 13px; background: #111; clip-path: polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%); }
 .title-star { position: absolute; right: 15px; top: 14px; width: 18px; height: 18px; }
-.overview { position: relative; width: 100%; aspect-ratio: 1; }
+.overview { position: relative; width: 100%; aspect-ratio: 1000 / 1090; }
 .artwork { position: absolute; margin: 0; }
 .artwork img { display: block; width: 100%; height: auto; }
 figcaption { margin-top: 7px; }

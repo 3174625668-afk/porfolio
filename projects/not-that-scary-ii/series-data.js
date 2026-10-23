@@ -67,7 +67,7 @@ export const overviewLayouts = [
 // Current static composition. Historical studies above are data only, not rendered.
 export const staticLayout = {
   width: 1000,
-  height: 1000,
+  height: 1090,
   pixelsPerCm: 300 / 38,
   placements: [
     { id: 'b', x: 0, y: 20 },
@@ -76,15 +76,15 @@ export const staticLayout = {
     { id: 'e', x: 45, y: 300 },
     { id: 'd', x: 350, y: 370 },
     { id: 'c', x: 745, y: 325 },
-    { id: 'f', x: 0, y: 665 },
-    { id: 'a', x: 535, y: 635 },
+    { id: 'f', x: 160, y: 700 },
+    { id: 'a', x: 690, y: 710 },
   ],
   decorations: [
     { type: 'star', x: 650, y: 610 },
-    { type: 'line', x: 70, y: 625 },
-    { type: 'line', x: 850, y: 910 },
-    { type: 'line', x: 825, y: 705 },
-    { type: 'star', x: 885, y: 775 },
-    { type: 'star', x: 360, y: 810 },
+    { type: 'line', x: 70, y: 660 },
+    { type: 'line', x: 535, y: 985 },
+    { type: 'line', x: 550, y: 680 },
+    { type: 'star', x: 945, y: 820 },
+    { type: 'star', x: 540, y: 850 },
   ],
 };
