@@ -1,126 +1,138 @@
-// Original assets, not the teacher's reference spreads. Physical dimensions and
-// all unconfirmed artwork information stay null. Pixel sizes only reserve layout.
+// Original assets, not the teacher's reference spreads. title is the confirmed
+// English title; titleZh is optional. Unknown physical dimensions remain null.
+// Pixel sizes only reserve layout. Apple metadata is shared via series below.
 export const artworks = [
   {
     "id": "01",
     "image": "../../public/images/printmaking/artworks/1.webp",
     "pixelWidth": 3687,
     "pixelHeight": 2572,
-    "title": null,
+    "title": "Gazing Through the Concrete Jungle",
     "seriesId": null,
-    "medium": null,
+    "medium": "Lithography",
     "dimensions": null,
-    "year": null
+    "year": 2025,
+    "titleZh": "望于钢筋丛林"
   },
   {
     "id": "02",
     "image": "../../public/images/printmaking/artworks/2.webp",
     "pixelWidth": 1980,
     "pixelHeight": 2681,
-    "title": null,
+    "title": "Between Stagnation",
     "seriesId": null,
-    "medium": null,
+    "medium": "Lithography",
     "dimensions": null,
-    "year": null
+    "year": 2025,
+    "titleZh": "凝滞之间"
   },
   {
     "id": "03",
     "image": "../../public/images/printmaking/artworks/3.webp",
     "pixelWidth": 2456,
     "pixelHeight": 2956,
-    "title": null,
+    "title": "Happy Little Island",
     "seriesId": null,
-    "medium": null,
+    "medium": "Monoprint",
     "dimensions": null,
-    "year": null
+    "year": 2024,
+    "titleZh": "小岛快乐"
   },
   {
     "id": "04",
     "image": "../../public/images/printmaking/artworks/4.webp",
     "pixelWidth": 3484,
     "pixelHeight": 2441,
-    "title": null,
+    "title": "Pray",
     "seriesId": null,
-    "medium": null,
+    "medium": "Mixed-media Printmaking",
     "dimensions": null,
-    "year": null
+    "year": 2023,
+    "titleZh": "拜"
   },
   {
     "id": "05",
     "image": "../../public/images/printmaking/artworks/5.webp",
     "pixelWidth": 3392,
     "pixelHeight": 2265,
-    "title": null,
+    "title": "Dizzy Morning",
     "seriesId": null,
-    "medium": null,
+    "medium": "Mixed-media Printmaking",
     "dimensions": null,
-    "year": null
+    "year": 2024,
+    "titleZh": null
   },
   {
     "id": "06",
     "image": "../../public/images/printmaking/artworks/6.webp",
     "pixelWidth": 2744,
     "pixelHeight": 1789,
-    "title": null,
+    "title": "Untitled",
     "seriesId": null,
-    "medium": null,
+    "medium": "Colour Etching",
     "dimensions": null,
-    "year": null
+    "year": 2024,
+    "titleZh": "无题"
   },
   {
     "id": "07",
     "image": "../../public/images/printmaking/artworks/7.webp",
     "pixelWidth": 2436,
     "pixelHeight": 3378,
-    "title": null,
+    "title": "Untitled",
     "seriesId": null,
-    "medium": null,
+    "medium": "Woodcut",
     "dimensions": null,
-    "year": null
+    "year": 2023,
+    "titleZh": "无题"
   },
   {
     "id": "08",
     "image": "../../public/images/printmaking/artworks/8.webp",
     "pixelWidth": 1718,
     "pixelHeight": 1801,
-    "title": null,
+    "title": "The Way",
     "seriesId": null,
-    "medium": null,
+    "medium": "Wood Engraving",
     "dimensions": null,
-    "year": null
+    "year": 2024,
+    "titleZh": null
   },
   {
     "id": "09",
     "image": "../../public/images/printmaking/artworks/9.webp",
     "pixelWidth": 2887,
     "pixelHeight": 3572,
-    "title": null,
+    "title": "Untitled",
     "seriesId": null,
-    "medium": null,
+    "medium": "Woodcut",
     "dimensions": null,
-    "year": null
+    "year": 2023,
+    "titleZh": "无题"
   },
   {
     "id": "10",
     "image": "../../public/images/printmaking/artworks/10.webp",
     "pixelWidth": 2187,
     "pixelHeight": 3153,
-    "title": null,
+    "title": "Untitled",
     "seriesId": null,
-    "medium": null,
+    "medium": "Acrylic",
     "dimensions": null,
-    "year": null
+    "year": 2025,
+    "titleZh": "无题"
   },
   {
     "id": "11",
     "image": "../../public/images/printmaking/artworks/11.webp",
     "pixelWidth": 3249,
     "pixelHeight": 2277,
-    "title": null,
+    "title": "Untitled",
     "seriesId": null,
-    "medium": null,
+    "medium": "Acrylic",
     "dimensions": null,
-    "year": null
+    "year": 2025,
+    "titleZh": "无题"
   },
   {
     "id": "12",
@@ -131,7 +143,8 @@ export const artworks = [
     "seriesId": "apple",
     "medium": null,
     "dimensions": null,
-    "year": null
+    "year": null,
+    "titleZh": null
   },
   {
     "id": "13",
@@ -142,7 +155,8 @@ export const artworks = [
     "seriesId": "apple",
     "medium": null,
     "dimensions": null,
-    "year": null
+    "year": null,
+    "titleZh": null
   },
   {
     "id": "14",
@@ -153,7 +167,8 @@ export const artworks = [
     "seriesId": "apple",
     "medium": null,
     "dimensions": null,
-    "year": null
+    "year": null,
+    "titleZh": null
   },
   {
     "id": "15",
@@ -164,92 +179,104 @@ export const artworks = [
     "seriesId": "apple",
     "medium": null,
     "dimensions": null,
-    "year": null
+    "year": null,
+    "titleZh": null
   },
   {
     "id": "16",
     "image": "../../public/images/printmaking/artworks/16.webp",
     "pixelWidth": 2258,
     "pixelHeight": 3186,
-    "title": null,
+    "title": "The Dragon Fights the Hero",
     "seriesId": null,
-    "medium": null,
+    "medium": "Screenprint",
     "dimensions": null,
-    "year": null
+    "year": 2024,
+    "titleZh": null
   },
   {
     "id": "17",
     "image": "../../public/images/printmaking/artworks/17.webp",
     "pixelWidth": 2112,
     "pixelHeight": 3125,
-    "title": null,
+    "title": "Untitled",
     "seriesId": null,
-    "medium": null,
+    "medium": "Screenprint",
     "dimensions": null,
-    "year": null
+    "year": 2024,
+    "titleZh": "无题"
   },
   {
     "id": "18",
     "image": "../../public/images/printmaking/artworks/18.webp",
     "pixelWidth": 2026,
     "pixelHeight": 2915,
-    "title": null,
+    "title": "Untitled",
     "seriesId": null,
-    "medium": null,
+    "medium": "Screenprint",
     "dimensions": null,
-    "year": null
+    "year": 2024,
+    "titleZh": "无题"
   },
   {
     "id": "19",
     "image": "../../public/images/printmaking/artworks/19.webp",
     "pixelWidth": 1902,
     "pixelHeight": 1883,
-    "title": null,
+    "title": "On",
     "seriesId": null,
-    "medium": null,
+    "medium": "Wood Engraving",
     "dimensions": null,
-    "year": null
+    "year": 2024,
+    "titleZh": null
   },
   {
     "id": "20",
     "image": "../../public/images/printmaking/artworks/20.webp",
     "pixelWidth": 2257,
     "pixelHeight": 2798,
-    "title": null,
+    "title": "Dreamy Town",
     "seriesId": null,
-    "medium": null,
+    "medium": "Monoprint",
     "dimensions": null,
-    "year": null
+    "year": 2024,
+    "titleZh": null
   },
   {
     "id": "21",
     "image": "../../public/images/printmaking/artworks/21.webp",
     "pixelWidth": 2528,
     "pixelHeight": 1762,
-    "title": null,
+    "title": "Rolling Onward",
     "seriesId": null,
-    "medium": null,
+    "medium": "Colour Etching",
     "dimensions": null,
-    "year": null
+    "year": 2025,
+    "titleZh": "滚滚向前"
   },
   {
     "id": "22",
     "image": "../../public/images/printmaking/artworks/22.webp",
     "pixelWidth": 1911,
     "pixelHeight": 2955,
-    "title": null,
+    "title": "Village",
     "seriesId": null,
-    "medium": null,
+    "medium": "Etching",
     "dimensions": null,
-    "year": null
+    "year": 2025,
+    "titleZh": "休主"
   }
 ];
 
 // The reference explicitly labels these four images together as Apple.
-// Store the series name once; individual artwork titles remain null.
+// Store the shared series name, medium and year once; individual titles stay null.
 export const series = {
   apple: {
     name: 'Apple',
+    titleZh: 'Apple',
+    medium: 'Monoprint',
+    year: 2024,
+    dimensions: null,
     artworkIds: ['12', '13', '14', '15'],
     reference: '../../public/images/printmaking/references/纯艺（20页）_19.jpg',
   },
@@ -302,8 +329,11 @@ export const galleryGroups = [
 ];
 
 export const galleryOrder = galleryGroups.flatMap(group => group.artworkIds);
+// Resolve shared metadata without assigning individual titles to Apple images.
 export const artworkRecords = artworks.map(artwork => ({
   ...artwork,
+  medium: artwork.medium ?? series[artwork.seriesId]?.medium ?? null,
+  year: artwork.year ?? series[artwork.seriesId]?.year ?? null,
   displayOrder: galleryOrder.indexOf(artwork.id),
   groupId: galleryGroups.find(group => group.artworkIds.includes(artwork.id)).id,
 }));
